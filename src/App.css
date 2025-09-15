@@ -1,0 +1,6 @@
+.loginForm input::placeholder{
+    color: rgb(202, 200, 200);
+}
+.loginForm input{
+    border:1px solid white !important;
+}
