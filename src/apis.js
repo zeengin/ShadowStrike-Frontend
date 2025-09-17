@@ -7,4 +7,5 @@ export const baseurl = getBaseUrl();
 export const apis = {
     LOGIN:`${baseurl}/api/auth/login`,
     SIGNUP:`${baseurl}/api/auth/signup`,
+    GET_USER:`${baseurl}/api/users`,
 }

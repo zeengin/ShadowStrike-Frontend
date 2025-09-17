@@ -3,6 +3,7 @@ import logo from "../assets/logo-text.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { apis } from "../apis";
+import { useUser } from "../context/UserContext";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+      const { user, fetchUser } = useUser();
+  
 
   // Handle input change
   const handleChange = (e) => {
@@ -48,7 +51,8 @@ const Login = () => {
       localStorage.setItem("token", data.token);
 
       setSuccess("Login successful! Redirecting...");
-      localStorage.setItem("ss_user", JSON.stringify({role:data?.role}))
+      localStorage.setItem("ss_user", JSON.stringify({role:data?.role,user_id:data?.user_id}))
+      fetchUser();
       setTimeout(() => navigate("/"), 1500);
     } catch (err) {
       setError(err.message);

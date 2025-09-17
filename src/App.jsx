@@ -11,11 +11,14 @@ import ContactPage from './pages/Contact';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Purchase from './pages/Purchase';
+import History from './pages/History';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { apis } from './apis';
 
 
 
 function App() {
-
   return (
      <Router>
       <Header />
@@ -31,6 +34,7 @@ function App() {
           <Route path="/services" element={<OurServices />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/purchase" element={<Purchase />} />
+          <Route path="/history" element={<History />} />
         </Routes>
       </main>
       
