@@ -53,7 +53,7 @@ const Login = () => {
       setSuccess("Login successful! Redirecting...");
       localStorage.setItem("ss_user", JSON.stringify({role:data?.role,user_id:data?.user_id}))
       fetchUser();
-      setTimeout(() => navigate("/"), 1500);
+      setTimeout(() => window.location.href = "/", 1500);
     } catch (err) {
       setError(err.message);
       setTimeout(()=>{

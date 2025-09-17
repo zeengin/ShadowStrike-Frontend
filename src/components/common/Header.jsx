@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import logo from "../../assets/logo-text.png";
 import { NavLink } from "react-router-dom";
@@ -9,8 +9,19 @@ import { useUser } from "../../context/UserContext";
 
 export default function Header() {
     const [anchorEl, setAnchorEl] = useState(null);
+    const [showUserAvatar,setShowUserAvatar] = useState(false);
     const open = Boolean(anchorEl);
     const { user, token , loading } = useUser();
+    
+
+    useEffect(()=>{
+        const tok = localStorage.getItem('token')
+        console.log(user);
+        if(user){
+            setShowUserAvatar(true)
+        }
+    },[token,user])
+    
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
