@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { Avatar, Menu, MenuItem, Divider, ListItemIcon } from "@mui/material";
 import { Settings, Logout, AccountBalance } from "@mui/icons-material";
 import HistoryIcon from '@mui/icons-material/History';
+import PersonIcon from '@mui/icons-material/Person';
 import { useUser } from "../../context/UserContext";
 
 export default function Header() {
@@ -85,7 +86,7 @@ export default function Header() {
                                         sx={{ bgcolor: "#1976d2", cursor: "pointer" }}
                                         onClick={handleClick}
                                     >
-                                        {user?.name?.[0] || "U"}
+                                        {user?.firstname?.[0] || "U"}
                                     </Avatar>
                                     <Menu
                                         anchorEl={anchorEl}
@@ -109,6 +110,12 @@ export default function Header() {
                                             </div>
                                         </MenuItem>
                                         <Divider sx={{ bgcolor: "#444" }} />
+                                        <MenuItem component={NavLink} to="/profile" onClick={handleClose}>
+                                            <ListItemIcon>
+                                                <PersonIcon fontSize="small" sx={{ color: "white" }} />
+                                            </ListItemIcon>
+                                            My Profile
+                                        </MenuItem>
                                         <MenuItem component={NavLink} to="/purchase" onClick={handleClose}>
                                             <ListItemIcon>
                                                 <AccountBalance fontSize="small" sx={{ color: "white" }} />

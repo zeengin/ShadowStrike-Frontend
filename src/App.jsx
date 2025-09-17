@@ -15,6 +15,7 @@ import History from './pages/History';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { apis } from './apis';
+import Profile from './pages/Profile';
 
 
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/entertainment" element={<Entertainment />} />
           <Route path="/technology" element={<Technology />} />
