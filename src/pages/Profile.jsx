@@ -44,7 +44,7 @@ export default function Profile() {
                                         {user?.firstname} {user?.lastname}
                                     </h5>
                                     <p className="mb-0 text-light">
-                                        {user?.role}
+                                        {/* {user?.role} */}
                                     </p>
                                 </div>
                             </div>
