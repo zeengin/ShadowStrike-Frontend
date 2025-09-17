@@ -16,14 +16,16 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { apis } from './apis';
 import Profile from './pages/Profile';
+import ScrollToTop from './components/common/ScrollToTop';
+import Terms from './pages/Terms';
 
 
 
 function App() {
   return (
      <Router>
+      <ScrollToTop />
       <Header />
-      
       <main>
         <Routes>
           <Route path="/login" element={<Login />} />
@@ -37,6 +39,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/purchase" element={<Purchase />} />
           <Route path="/history" element={<History />} />
+          <Route path="/terms&conditions" element={<Terms />} />
         </Routes>
       </main>
       

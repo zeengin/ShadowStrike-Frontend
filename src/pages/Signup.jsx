@@ -4,6 +4,10 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { apis } from "../apis";
 
+// ✅ Import MUI Checkbox & FormControlLabel
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
+
 const Signup = () => {
     const navigate = useNavigate();
 
@@ -19,6 +23,9 @@ const Signup = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
+
+    // ✅ checkbox state
+    const [acceptedTerms, setAcceptedTerms] = useState(false);
 
     // handle input change
     const handleChange = (e) => {
@@ -38,17 +45,15 @@ const Signup = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(
-                    {
-                    "firstname": formData?.firstName,
-                    "lastname": formData?.lastName,
-                    "email": formData?.email,
-                    "phone": formData?.phone,
-                    "password": formData?.password,
-                    "confirmPassword": formData?.password,
-                    "role": "user"
-                }
-                ),
+                body: JSON.stringify({
+                    firstname: formData?.firstName,
+                    lastname: formData?.lastName,
+                    email: formData?.email,
+                    phone: formData?.phone,
+                    password: formData?.password,
+                    confirmPassword: formData?.password,
+                    role: "user",
+                }),
             });
 
             const data = await res.json();
@@ -204,13 +209,45 @@ const Signup = () => {
                                             </div>
                                         )}
 
+                                        {/* ✅ Terms & Conditions Checkbox */}
+                                        <div className="col-sm-12 mt-3">
+                                            <FormControlLabel
+                                                control={
+                                                    <Checkbox
+                                                        checked={acceptedTerms}
+                                                        onChange={(e) =>
+                                                            setAcceptedTerms(e.target.checked)
+                                                        }
+                                                        // color="secondary"
+                                                        sx={{
+                                                            color: "white", // unchecked color
+                                                            "&.Mui-checked": {
+                                                                color: "#cfa122", // checked color
+                                                            },
+                                                        }}
+                                                    />
+                                                }
+                                                label={
+                                                    <span>
+                                                        I accept &nbsp;
+                                                        <NavLink
+                                                            to="/terms&conditions"
+                                                            className="fw-bold text-decoration-underline"
+                                                        >
+                                                            terms & conditions
+                                                        </NavLink>
+                                                    </span>
+                                                }
+                                            />
+                                        </div>
+
                                         {/* Submit Button */}
                                         <div className="col-sm-12 mt-4">
                                             <div className="btn-area text-center">
                                                 <button
                                                     type="submit"
                                                     className="box-style btn-box"
-                                                    disabled={loading}
+                                                    disabled={loading || !acceptedTerms} // ✅ disable until checked
                                                 >
                                                     {loading ? "Signing up..." : "Sign up"}
                                                 </button>
