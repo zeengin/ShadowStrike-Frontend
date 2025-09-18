@@ -1,6 +1,8 @@
 import novaClicker from "../../assets/games/Nova-Clicker-x22.jpg";
 import fastFoodRush from "../../assets/games/fast-food-rush-xs.jpg";
 import cookieClickerPro from "../../assets/games/Cookie-Clicker-Pro-Game-xs2.jpg";
+import { useUser } from "../../context/UserContext";
+import toast, { Toaster } from "react-hot-toast";
 
 function OurGames() {
   const games = [
@@ -32,6 +34,10 @@ function OurGames() {
       link: "https://cloud.onlinegames.io/games/2025/unity/cookie-clicker-pro/index-og.html",
     },
   ];
+
+  const { user, token, loading } = useUser();
+
+
 
   return (
     <section className="our-games team-members index-two overflow-hidden pt-120 pb-120">
@@ -96,14 +102,27 @@ function OurGames() {
                         <p className="content_lines">{game.description}</p>
 
                         <div className="btn-area alt-bg mt-2">
-                          <a
-                            href={game.link}
-                            className="box-style btn-box d-center"
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            Play Games
-                          </a>
+                          {!user ?
+                            <span
+                              className="box-style btn-box d-center cursor-pointer"
+                              onClick={() => {
+                                toast.dismiss();
+                                toast.error("Please register to play.");
+                              }}
+                              style={{cursor:"pointer"}}
+                            >
+                              Play Games
+                            </span>
+                            :
+                            <a
+                              href={game.link}
+                              className="box-style btn-box d-center cursor-pointer"
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{cursor:"pointer"}}
+                            >
+                              Play Games
+                            </a>}
                         </div>
                       </div>
                     </div>
@@ -114,6 +133,33 @@ function OurGames() {
           </div>
         </div>
       </div>
+       <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            zIndex:1000000000000,
+            background: "#1e1e1e",   // dark background
+            color: "#fff",           // white text
+            borderRadius: "8px",
+            padding: "12px 16px",
+            marginTop:"40px"
+          },
+          success: {
+            style: { background: "#1f3d2b", color: "#b6f2c8" }, // greenish
+            iconTheme: {
+              primary: "#22c55e",
+              secondary: "#fff",
+            },
+          },
+          error: {
+            style: { background: "#3d1f1f", color: "#f2b6b6" }, // reddish
+            iconTheme: {
+              primary: "#ef4444",
+              secondary: "#fff",
+            },
+          },
+        }}
+      />
     </section>
   );
 }

@@ -2,27 +2,29 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import logo from "../../assets/logo-text.png";
 import { NavLink } from "react-router-dom";
-import { Avatar, Menu, MenuItem, Divider, ListItemIcon } from "@mui/material";
+import { Avatar, Menu, MenuItem, Divider, ListItemIcon, Box, Typography } from "@mui/material";
 import { Settings, Logout, AccountBalance } from "@mui/icons-material";
 import HistoryIcon from '@mui/icons-material/History';
 import PersonIcon from '@mui/icons-material/Person';
 import { useUser } from "../../context/UserContext";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 export default function Header() {
     const [anchorEl, setAnchorEl] = useState(null);
-    const [showUserAvatar,setShowUserAvatar] = useState(false);
+    const [showUserAvatar, setShowUserAvatar] = useState(false);
     const open = Boolean(anchorEl);
-    const { user, token , loading } = useUser();
-    
+    const { user, token, loading } = useUser();
 
-    useEffect(()=>{
+
+    useEffect(() => {
         const tok = localStorage.getItem('token')
         console.log(user);
-        if(user){
+        if (user) {
             setShowUserAvatar(true)
         }
-    },[token,user])
-    
+    }, [token, user])
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -74,20 +76,43 @@ export default function Header() {
                         {/* Right Area */}
                         <div className="right-area position-relative d-flex gap-3 gap-xxl-6 align-items-center pe-8">
                             {(!token) ? (
-                                <NavLink
-                                    to="/login"
-                                    className="box-style btn-sm py-1 rounded-pill btn-box d-center"
-                                >
-                                    Login / Sign up
-                                </NavLink>
+                                <>
+                                    <NavLink
+                                        to="/login"
+                                        className="box-style btn-sm py-1 rounded-pill btn-box d-center"
+                                    >
+                                        Login / Register
+                                    </NavLink>
+                                    <NavLink
+                                        to="/contact"
+                                        className="box-style btn-sm py-1 rounded-pill btn-box d-center"
+                                    >
+                                        Contact Us
+                                    </NavLink>
+                                </>
                             ) : (
                                 <>
-                                    <Avatar
-                                        sx={{ bgcolor: "#1976d2", cursor: "pointer" }}
-                                        onClick={handleClick}
+                                    <Box
+                                        sx={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: 1.5, // space between avatar and name
+                                            cursor: "pointer",
+                                        }}
+                                        onClick={handleClick} // clicking anywhere opens the menu
                                     >
-                                        {user?.firstname?.[0] || "U"}
-                                    </Avatar>
+                                        <Avatar sx={{ bgcolor: "#cfa122" }}>
+                                            {user?.firstname?.[0] || "U"}
+                                        </Avatar>
+                                        <span className="font-bold">
+                                            {user?.firstname || "User"}
+                                        </span>
+                                        <span>
+                                            {open ?
+                                                <ArrowDropUpIcon fontSize="medium" sx={{ color: "white" }} />
+                                                : <ArrowDropDownIcon fontSize="medium" sx={{ color: "white" }} />}
+                                        </span>
+                                    </Box>
                                     <Menu
                                         anchorEl={anchorEl}
                                         open={open}
@@ -137,13 +162,6 @@ export default function Header() {
                                     </Menu>
                                 </>
                             )}
-
-                            <NavLink
-                                to="/contact"
-                                className="box-style btn-sm py-1 rounded-pill btn-box d-center"
-                            >
-                                Contact Us
-                            </NavLink>
                         </div>
                     </div>
                 </nav>

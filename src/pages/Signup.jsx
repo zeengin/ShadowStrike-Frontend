@@ -18,6 +18,7 @@ const Signup = () => {
         email: "",
         phone: "",
         password: "",
+        username:""
     });
 
     const [loading, setLoading] = useState(false);
@@ -53,6 +54,7 @@ const Signup = () => {
                     password: formData?.password,
                     confirmPassword: formData?.password,
                     role: "user",
+                    username: formData?.username
                 }),
             });
 
@@ -142,6 +144,22 @@ const Signup = () => {
                                                     name="lastName"
                                                     placeholder="Enter your last name"
                                                     value={formData.lastName}
+                                                    onChange={handleChange}
+                                                    autoComplete="off"
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                        {/* Username */}
+                                        <div className="col-sm-12">
+                                            <div className="single-input text-start">
+                                                <label htmlFor="username">User Name</label>
+                                                <input
+                                                    type="text"
+                                                    id="username"
+                                                    name="username"
+                                                    placeholder="Enter username"
+                                                    value={formData.username}
                                                     onChange={handleChange}
                                                     autoComplete="off"
                                                     required
@@ -246,8 +264,11 @@ const Signup = () => {
                                             <div className="btn-area text-center">
                                                 <button
                                                     type="submit"
-                                                    className="box-style btn-box"
-                                                    disabled={loading || !acceptedTerms} // ✅ disable until checked
+                                                    className={`box-style btn-box`}
+                                                    style={{
+                                                        cursor: (loading || !acceptedTerms) ? "no-drop" : "pointer"
+                                                    }}
+                                                    disabled={loading || !acceptedTerms}
                                                 >
                                                     {loading ? "Signing up..." : "Sign up"}
                                                 </button>

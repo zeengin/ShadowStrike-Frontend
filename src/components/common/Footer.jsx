@@ -36,9 +36,9 @@ function Footer() {
         <div className="row py-8 mt-3">
           {/* Column 1 */}
           <div className="col-md-3 col-lg-4 col-xl-2 mx-auto mb-4">
-            <h6 className="text-uppercase fw-bold mb-4">Shadowstrike</h6>
+            <h6 className="text-uppercase fw-bold mb-4">SHADOWSTRIKE</h6>
             <p>
-              Shadowstrike games are typically action-packed, stealth-based
+              SHADOWSTRIKE games are typically action-packed, stealth-based
               video games that focus on strategy, combat, and survival, often
               featuring dark themes, secret missions, and immersive storytelling.
             </p>
@@ -51,16 +51,19 @@ function Footer() {
               <NavLink to="/" className="text-reset">Home</NavLink>
             </p>
             <p className="mb-3">
-              <NavLink to="/about-us" className="text-reset">About us</NavLink>
+              <NavLink to="/about-us" className="text-reset">About Us</NavLink>
             </p>
             <p className="mb-3">
               <NavLink to="/services" className="text-reset">Our Services</NavLink>
             </p>
             <p className="mb-3">
-              <NavLink to="/technology" className="text-reset">Technology</NavLink>
+              <NavLink to="/technology" className="text-reset">Technologies</NavLink>
             </p>
             <p className="mb-3">
               <NavLink to="/entertainment" className="text-reset">Entertainment</NavLink>
+            </p>
+            <p className="mb-3">
+              <NavLink to="/contact" className="text-reset">Contact Us</NavLink>
             </p>
           </div>
 
@@ -96,7 +99,7 @@ function Footer() {
               <div className="copyright">
                 <p>
                   Copyright © 2025{" "}
-                  <a href="index.html">Shadowstrike</a> - All Right Reserved
+                  <NavLink to="/">SHADOWSTRIKE</NavLink> - All Right Reserved
                 </p>
               </div>
             </div>

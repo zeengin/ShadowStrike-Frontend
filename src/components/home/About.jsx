@@ -83,7 +83,7 @@ function About() {
           <div className="col-xxl-5 col-lg-6">
             <div className="section-text">
               <h4 className="sub-title">
-                Welcome to <span>Shadowstrike</span> Studios
+                Welcome to <span>SHADOWSTRIKE</span> Studios
               </h4>
               <span className="fs-two heading mb-6">
                 Bringing people together through <span>the power of play</span>
