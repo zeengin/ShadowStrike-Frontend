@@ -1,5 +1,5 @@
 const getBaseUrl = () => {
-    return import.meta.env.VITE_APP_BASEURL || "https://shadowstrike.onrender.com"
+   return "https://shadowstrike.onrender.com"
 }
 
 export const baseurl = getBaseUrl();
@@ -9,4 +9,6 @@ export const apis = {
     SIGNUP:`${baseurl}/api/auth/signup`,
     GET_PROFILE:`${baseurl}/api/profile`,
     GET_USER:`${baseurl}/api/users`,
+    PURCHASE_COINS:`${baseurl}/api/coins/purchase`,
+    TRANSANCTIONS:`${baseurl}/api/transactions`,
 }

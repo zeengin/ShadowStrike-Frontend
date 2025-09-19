@@ -72,7 +72,7 @@ const Login = () => {
       <Helmet>
         <title>Shadowstrike - Login</title>
       </Helmet>
-      <div className="overlay overflow-hidden">
+      <div className="overlay">
         <div className="container">
           <div className="row justify-content-between align-items-center">
             {/* Left Section */}
@@ -112,7 +112,7 @@ const Login = () => {
                     {/* Email / Phone */}
                     <div className="col-sm-12">
                       <div className="single-input text-start">
-                        <label htmlFor="loginEmail">Email/Phone</label>
+                        <label htmlFor="loginEmail">Email</label>
                         <input
                           type="text"
                           id="loginEmail"

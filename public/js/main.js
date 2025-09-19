@@ -317,27 +317,27 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-    // game-carousel
-    $(".game-carousel").not('.slick-initialized').slick({
-      infinite: true,
-      autoplay: true,
-      centerMode: false,
-      centerPadding: "0px 50px",
-      focusOnSelect: false,
-      speed: 500,
-      slidesToShow: 2,
-      slidesToScroll: 1,
-      arrows: true,
-      prevArrow: "<button type='button' aria-label='Slide Prev' class='arafat-prev box-style pull-left'><i class=\"material-symbols-outlined mat-icon\"  aria-hidden='true'>arrow_right_alt</i> <span class='bg-obj'></span> </button>",
-      nextArrow: "<button type='button' aria-label='Slide Next' class='arafat-next box-style pull-right'><i class=\"material-symbols-outlined mat-icon\"  aria-hidden='true'>arrow_right_alt</i> <span class='bg-obj'></span> </button>",
-      dots: false,
-      dotsClass: 'section-dots',
-      customPaging: function (slider, i) {
-        var slideNumber = (i + 1),
-          totalSlides = slider.slideCount;
-        return '<a class="dot" role="button" title="' + slideNumber + ' of ' + totalSlides + '"><span class="string">' + slideNumber + '/' + totalSlides + '</span></a>';
-      },
-    });
+    // // game-carousel
+    // $(".game-carousel").not('.slick-initialized').slick({
+    //   infinite: true,
+    //   autoplay: true,
+    //   centerMode: false,
+    //   centerPadding: "0px 50px",
+    //   focusOnSelect: false,
+    //   speed: 500,
+    //   slidesToShow: 2,
+    //   slidesToScroll: 1,
+    //   arrows: true,
+    //   prevArrow: "<button type='button' aria-label='Slide Prev' class='arafat-prev box-style pull-left'><i class=\"material-symbols-outlined mat-icon\"  aria-hidden='true'>arrow_right_alt</i> <span class='bg-obj'></span> </button>",
+    //   nextArrow: "<button type='button' aria-label='Slide Next' class='arafat-next box-style pull-right'><i class=\"material-symbols-outlined mat-icon\"  aria-hidden='true'>arrow_right_alt</i> <span class='bg-obj'></span> </button>",
+    //   dots: false,
+    //   dotsClass: 'section-dots',
+    //   customPaging: function (slider, i) {
+    //     var slideNumber = (i + 1),
+    //       totalSlides = slider.slideCount;
+    //     return '<a class="dot" role="button" title="' + slideNumber + ' of ' + totalSlides + '"><span class="string">' + slideNumber + '/' + totalSlides + '</span></a>';
+    //   },
+    // });
 
     // Odometer
     $(".odometer").each(function () {
