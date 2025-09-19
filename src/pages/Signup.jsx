@@ -3,44 +3,68 @@ import logo from "../assets/logo-text.png";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { apis } from "../apis";
-
-// ✅ Import MUI Checkbox & FormControlLabel
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import toast, { Toaster } from "react-hot-toast";
 
 const Signup = () => {
     const navigate = useNavigate();
-
-    // form state
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
         email: "",
         phone: "",
         password: "",
-        username:""
+        confirmPassword: ""
     });
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
 
-    // ✅ checkbox state
     const [acceptedTerms, setAcceptedTerms] = useState(false);
 
-    // handle input change
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+
+        if (name === "phone") {
+            let phoneValue = value;
+
+            // Always start with +1
+            if (!phoneValue.startsWith("+1")) {
+                phoneValue = "+1" + phoneValue.replace(/^\+?1?/, "");
+            }
+
+            // Remove non-digit characters after +1
+            phoneValue = "+1" + phoneValue.substring(2).replace(/\D/g, "");
+
+            // Limit to +1 + 10 digits
+            if (phoneValue.length > 12) {
+                phoneValue = phoneValue.substring(0, 12);
+            }
+
+            setFormData({ ...formData, [name]: phoneValue });
+        } else {
+            setFormData({ ...formData, [name]: value });
+        }
     };
 
-    // handle form submit
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError("");
         setSuccess("");
-
         try {
+
+            if (formData?.password !== formData?.confirmPassword) {
+                toast.dismiss();
+                toast.error("Passwords do not match");
+                return;
+            }
+
+
             const res = await fetch(apis?.SIGNUP, {
                 method: "POST",
                 headers: {
@@ -54,7 +78,6 @@ const Signup = () => {
                     password: formData?.password,
                     confirmPassword: formData?.password,
                     role: "user",
-                    username: formData?.username
                 }),
             });
 
@@ -150,22 +173,6 @@ const Signup = () => {
                                                 />
                                             </div>
                                         </div>
-                                        {/* Username */}
-                                        <div className="col-sm-12">
-                                            <div className="single-input text-start">
-                                                <label htmlFor="username">User Name</label>
-                                                <input
-                                                    type="text"
-                                                    id="username"
-                                                    name="username"
-                                                    placeholder="Enter username"
-                                                    value={formData.username}
-                                                    onChange={handleChange}
-                                                    autoComplete="off"
-                                                    required
-                                                />
-                                            </div>
-                                        </div>
                                         {/* Email */}
                                         <div className="col-sm-12">
                                             <div className="single-input text-start">
@@ -195,6 +202,9 @@ const Signup = () => {
                                                     onChange={handleChange}
                                                     autoComplete="off"
                                                 />
+                                                <small style={{ fontSize: "0.8rem", color: "#aaa" }}>
+                                                    Format: +1 followed by 10 digits
+                                                </small>
                                             </div>
                                         </div>
 
@@ -206,8 +216,25 @@ const Signup = () => {
                                                     type="password"
                                                     id="loginPassword"
                                                     name="password"
-                                                    placeholder="Enter your password"
+                                                    placeholder="Password"
                                                     value={formData.password}
+                                                    onChange={handleChange}
+                                                    autoComplete="off"
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Confirm Password */}
+                                        <div className="col-sm-12">
+                                            <div className="single-input text-start">
+                                                <label htmlFor="confirmPassword">Confirm Password</label>
+                                                <input
+                                                    type="password"
+                                                    id="confirmPassword"
+                                                    name="confirmPassword"
+                                                    placeholder="Confirm Password"
+                                                    value={formData.confirmPassword}
                                                     onChange={handleChange}
                                                     autoComplete="off"
                                                     required
@@ -291,6 +318,33 @@ const Signup = () => {
                     </div>
                 </div>
             </div>
+            <Toaster
+                position="top-right"
+                toastOptions={{
+                    style: {
+                        zIndex: 1000000000000,
+                        background: "#1e1e1e",
+                        color: "#fff",
+                        borderRadius: "8px",
+                        padding: "12px 16px",
+                        marginTop: "80px"
+                    },
+                    success: {
+                        style: { background: "#1f3d2b", color: "#b6f2c8" }, // greenish
+                        iconTheme: {
+                            primary: "#22c55e",
+                            secondary: "#fff",
+                        },
+                    },
+                    error: {
+                        style: { background: "#3d1f1f", color: "#f2b6b6" }, // reddish
+                        iconTheme: {
+                            primary: "#ef4444",
+                            secondary: "#fff",
+                        },
+                    },
+                }}
+            />
         </section>
     );
 };

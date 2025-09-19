@@ -1,5 +1,5 @@
 const getBaseUrl = () => {
-   return "https://shadowstrike.onrender.com"
+    return import.meta.env.VITE_APP_BASEURL 
 }
 
 export const baseurl = getBaseUrl();
