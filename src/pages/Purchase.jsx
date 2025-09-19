@@ -5,6 +5,7 @@ import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { apis } from "../apis";
 import axiosWithHeaders from "../helper/axiosWithHeaders";
+import { NavLink, useNavigate } from "react-router-dom";
 
 export default function PointsPurchase() {
   const [points, setPoints] = useState(10);
@@ -12,22 +13,23 @@ export default function PointsPurchase() {
   const [agreePricing, setAgreePricing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState({ type: "", message: "" });
+  const navigate = useNavigate();
 
   const dollars = points; // 1:1 mapping
   const isCheckoutDisabled = !(agreeTerms && agreePricing && points > 0);
 
   const handlePointsChange = (e) => {
     let value = Number(e?.target.value)
-    if(value == 0){
-        value = ""
+    if (value == 0) {
+      value = ""
     }
     setPoints(value);
   };
 
   const handleDollarsChange = (e) => {
     let value = Number(e?.target.value)
-    if(value == 0){
-        value = ""
+    if (value == 0) {
+      value = ""
     }
     setPoints(value);
   };
@@ -44,11 +46,14 @@ export default function PointsPurchase() {
       });
 
       const data = response?.data;
-      if (data?.data?.transactionId) {
+      if (response?.status === 200) {
         setAlert({
           type: "success",
           message: `Purchase successful! You bought ${points} coins.`,
         });
+        setTimeout(() => {
+          navigate('/history');
+        }, 1500);
       } else {
         setAlert({
           type: "error",
@@ -62,9 +67,9 @@ export default function PointsPurchase() {
       });
     } finally {
       setLoading(false);
-      setTimeout(()=>{
+      setTimeout(() => {
         setAlert({ type: "", message: "" })
-      },4000);
+      }, 4000);
     }
   };
 
@@ -136,9 +141,9 @@ export default function PointsPurchase() {
             label={
               <span>
                 I accept the{" "}
-                <a href="#" className="text-info">
+                <NavLink to="/terms&conditions" className="text-info">
                   Terms & Policies
-                </a>
+                </NavLink>
               </span>
             }
           />
@@ -161,9 +166,8 @@ export default function PointsPurchase() {
           </p>
 
           <button
-            className={`btn w-100 fw-semibold ${
-              isCheckoutDisabled || loading ? "btn-secondary" : "btn-warning"
-            }`}
+            className={`btn w-100 fw-semibold ${isCheckoutDisabled || loading ? "btn-secondary" : "btn-warning"
+              }`}
             disabled={isCheckoutDisabled || loading}
             onClick={handleCheckout}
           >

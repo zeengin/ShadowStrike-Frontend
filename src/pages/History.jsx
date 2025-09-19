@@ -19,7 +19,7 @@ export default function History() {
     "Amount Loaded",
     "Status",
     "Receipt",
-    "Dispute",
+    // "Dispute",
   ];
 
   const fetchTransactions = async () => {
