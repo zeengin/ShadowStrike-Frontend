@@ -2703,7 +2703,9 @@ li {
 .our-games .single-box {
     background-color: var(--n500);
     border: 2px solid var(--n200);
-    border-radius: 12px
+    border-radius: 12px;
+    height: 600px;
+    margin-top: 8px;
 }
 
 .our-games .single-box p>a {

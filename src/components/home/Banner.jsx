@@ -11,6 +11,7 @@ import driftKing from "../../assets/games/Drift-King-xs.jpg";
 import novaClicker from "../../assets/games/Nova-Clicker-x22.jpg";
 import highwayTraffic from "../../assets/games/Highway-Traffic-2-xs.jpg";
 import capybaraClickerPro from "../../assets/games/Capybara-Clicker-Pro-xs.jpg";
+import { useUser } from "../../context/UserContext";
 
 // Game data grouped per slide
 const featuredGames = [
@@ -94,6 +95,9 @@ function Banner() {
     arrows: false,
   };
 
+    const { user } = useUser();
+
+
   return (
     <section className="banner-section index-one overflow-hidden">
       <div className="overlay overflow-hidden">
@@ -142,7 +146,7 @@ function Banner() {
                         <div className="single-slider row p-3 p-sm-5">
                           {slide.map((game, gIdx) => (
                             <div key={gIdx} className="thumb-wrapper col-6">
-                              <a
+                             {user ? <a
                                 href={game.link}
                                 target="_blank"
                                 rel="noreferrer"
@@ -157,7 +161,20 @@ function Banner() {
                                 <div className="app-download-title pt-1 text-center">
                                   <h6>{game.name}</h6>
                                 </div>
-                              </a>
+                              </a> :
+                              <>
+                              <div className="thumb">
+                                  <img
+                                    src={game.img}
+                                    className="border p-2 shadow rounded-4"
+                                    alt={game.name}
+                                  />
+                                </div>
+                                <div className="app-download-title pt-1 text-center">
+                                  <h6>{game.name}</h6>
+                                </div>
+                              </>
+                              }
                             </div>
                           ))}
                         </div>
