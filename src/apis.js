@@ -10,5 +10,5 @@ export const apis = {
     GET_PROFILE:`${baseurl}/api/profile`,
     GET_USER:`${baseurl}/api/users`,
     PURCHASE_COINS:`${baseurl}/api/coins/purchase`,
-    TRANSANCTIONS:`${baseurl}/api/transactions`,
-}
+    TRANSANCTIONS:`${baseurl}/api/transactions`, // also used to get receipts /<receipt-id>/receipt (prefix of route)
+} 

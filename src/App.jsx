@@ -18,6 +18,7 @@ import { apis } from './apis';
 import Profile from './pages/Profile';
 import ScrollToTop from './components/common/ScrollToTop';
 import Terms from './pages/Terms';
+import Checkout from './pages/Checkout';
 
 
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="/services" element={<OurServices />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/purchase" element={<Purchase />} />
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/history" element={<History />} />
           <Route path="/terms&conditions" element={<Terms />} />
         </Routes>

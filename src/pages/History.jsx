@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Tabs, Tab, Button } from "@mui/material";
+import { Tabs, Tab, Button, CircularProgress } from "@mui/material";
 import Table from "../components/common/Table";
 import axiosWithHeaders from "../helper/axiosWithHeaders";
 import { apis } from "../apis";
@@ -10,6 +10,7 @@ export default function History() {
   const [deposits, setDeposits] = useState([]);
   const [withdrawals, setWithdrawals] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [buttonLoadingId, setButtonLoadingId] = useState(null); // <-- track clicked row
 
   const columns = [
     "Id",
@@ -19,18 +20,17 @@ export default function History() {
     "Amount Loaded",
     "Status",
     "Receipt",
-    // "Dispute",
   ];
+
 
   const fetchTransactions = async () => {
     try {
       setLoading(true);
       const { data } = await axiosWithHeaders.get(apis.TRANSANCTIONS);
 
-      // assuming API returns { deposits: [], withdrawals: [] }
       const mappedDeposits = data?.map((txn) => ({
         id: txn?.transactionId,
-        date: moment( txn?.date).format("YYYY-MM-DD"),
+        date: moment(txn?.date).format("YYYY-MM-DD"),
         provider: txn?.provider,
         amountpaid: `$${txn?.amountPaid}`,
         amountloaded: `${txn?.amountLoaded} Coins`,
@@ -39,20 +39,15 @@ export default function History() {
           <Button
             variant="outlined"
             size="small"
-            href={txn.receiptUrl || "#"}
-            sx={{ color: "white", borderColor: "white" }}
+            onClick={() => handleViewReceipt(txn?._id)}
+            sx={{ color: "white", borderColor: "white", minWidth: 80 }}
           >
-            View
-          </Button>
-        ),
-        dispute: (
-          <Button
-            variant="outlined"
-            size="small"
-            color="error"
-            href="#"
-          >
-            Raise
+            {/* {buttonLoadingId == txn?._id ? (
+              <CircularProgress size={18} sx={{ color: "white" }} />
+            ) : (
+              "View"
+            )} */}
+             View
           </Button>
         ),
       }));
@@ -68,20 +63,14 @@ export default function History() {
           <Button
             variant="outlined"
             size="small"
-            href={txn.receiptUrl || "#"}
-            sx={{ color: "white", borderColor: "white" }}
+            onClick={() => handleViewReceipt(txn?._id)}
+            sx={{ color: "white", borderColor: "white", minWidth: 80 }}
           >
-            View
-          </Button>
-        ),
-        dispute: (
-          <Button
-            variant="outlined"
-            size="small"
-            color="error"
-            href="#"
-          >
-            Raise
+            {buttonLoadingId === txn?._id ? (
+              <CircularProgress size={18} sx={{ color: "white" }} />
+            ) : (
+              "View"
+            )}
           </Button>
         ),
       }));
@@ -95,16 +84,55 @@ export default function History() {
     }
   };
 
+const handleViewReceipt = async (transactionId) => {
+  try {
+    setButtonLoadingId(transactionId);
+
+    const response = await axiosWithHeaders.get(
+      `${apis.TRANSANCTIONS}/${transactionId}/receipt`,
+      { responseType: "blob" } // important for files
+    );
+
+    // Create a blob from the response
+    const blob = new Blob([response.data], { type: response.headers["content-type"] });
+    const url = window.URL.createObjectURL(blob);
+
+    // Try to get filename from response headers
+    const contentDisposition = response.headers["content-disposition"];
+    const date = moment().format("YYYYMMDD_HHmmss");
+    let fileName = `receipt${date}.pdf`; // fallback
+    if (contentDisposition && contentDisposition.includes("filename=")) {
+      fileName = contentDisposition.split("filename=")[1].replace(/["']/g, "");
+    }
+
+    // Create link element
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Release memory
+    window.URL.revokeObjectURL(url);
+  } catch (err) {
+    console.error("Error fetching receipt:", err);
+  } finally {
+    setButtonLoadingId(null);
+  }
+};
+
+
   useEffect(() => {
     fetchTransactions();
   }, []);
 
   return (
-    <div className="container pt-120 pb-120" style={{minHeight: "50vh"}}>
+    <div className="container pt-120 pb-120" style={{ minHeight: "50vh" }}>
       <div className="d-flex items-center justify-content-between">
         <h2 className="fw-bold text-white mb-4">Transaction History</h2>
 
-        <Tabs
+        {/* <Tabs
           value={tab}
           onChange={(e, newValue) => setTab(newValue)}
           textColor="inherit"
@@ -116,8 +144,7 @@ export default function History() {
           }}
         >
           <Tab label="Deposits" />
-          {/* <Tab label="Withdrawals" /> */}
-        </Tabs>
+        </Tabs> */}
       </div>
 
       <Table
