@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "react-phone-input-2/lib/style.css";
 import PhoneInput from "react-phone-input-2";
-import "../assets/css/Checkout.css";
+import "../assets/css/checkout.css";
 import cardsIcons from "../assets/icon/cards.png";
 
 const Checkout = () => {
