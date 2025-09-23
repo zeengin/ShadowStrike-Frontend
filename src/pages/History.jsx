@@ -132,7 +132,7 @@ const handleViewReceipt = async (transactionId) => {
       <div className="d-flex items-center justify-content-between">
         <h2 className="fw-bold text-white mb-4">Transaction History</h2>
 
-        <Tabs
+        {/* <Tabs
           value={tab}
           onChange={(e, newValue) => setTab(newValue)}
           textColor="inherit"
@@ -144,8 +144,7 @@ const handleViewReceipt = async (transactionId) => {
           }}
         >
           <Tab label="Deposits" />
-          {/* <Tab label="Withdrawals" /> */}
-        </Tabs>
+        </Tabs> */}
       </div>
 
       <Table
