@@ -4,8 +4,10 @@ import Table from "../components/common/Table";
 import axiosWithHeaders from "../helper/axiosWithHeaders";
 import { apis } from "../apis";
 import moment from "moment/moment";
+import { useNavigate } from "react-router-dom";
 
 export default function History() {
+  const navigate = useNavigate();
   const [tab, setTab] = useState(0);
   const [deposits, setDeposits] = useState([]);
   const [withdrawals, setWithdrawals] = useState([]);
@@ -39,7 +41,7 @@ export default function History() {
           <Button
             variant="outlined"
             size="small"
-            onClick={() => handleViewReceipt(txn?._id)}
+            onClick={() => navigate(`/receipt/${txn?._id}`)}
             sx={{ color: "white", borderColor: "white", minWidth: 80 }}
           >
             {/* {buttonLoadingId == txn?._id ? (
@@ -63,7 +65,7 @@ export default function History() {
           <Button
             variant="outlined"
             size="small"
-            onClick={() => handleViewReceipt(txn?._id)}
+            onClick={() => navigate(txn?._id)}
             sx={{ color: "white", borderColor: "white", minWidth: 80 }}
           >
             {buttonLoadingId === txn?._id ? (
