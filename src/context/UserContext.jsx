@@ -18,10 +18,12 @@ export const UserProvider = ({ children }) => {
   // Fetch user from API
   const fetchUser = async () => {
     try {
-      const headers = {'Authorization':`Bearer ${token}`}
-      const res = await axios.get(`${apis.GET_PROFILE}`,{headers});
-      console.log("API has been invoked in context",res);
-      setUser(res?.data?.profile);
+      if (token) {
+        const headers = { 'Authorization': `Bearer ${token}` }
+        const res = await axios.get(`${apis.GET_PROFILE}`, { headers });
+        console.log("API has been invoked in context", res);
+        setUser(res?.data?.profile);
+      }
     } catch (err) {
       console.error(err);
       setUser(null);
@@ -35,7 +37,7 @@ export const UserProvider = ({ children }) => {
   }, [token]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, loading,token,fetchUser }}>
+    <UserContext.Provider value={{ user, setUser, loading, token, fetchUser }}>
       {children}
     </UserContext.Provider>
   );

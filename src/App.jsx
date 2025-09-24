@@ -19,6 +19,7 @@ import Profile from './pages/Profile';
 import ScrollToTop from './components/common/ScrollToTop';
 import Terms from './pages/Terms';
 import Checkout from './pages/Checkout';
+import Receipt from './pages/Receipt';
 
 
 
@@ -41,6 +42,7 @@ function App() {
           <Route path="/purchase" element={<Purchase />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/history" element={<History />} />
+          <Route path="/receipt/:transactionId" element={<Receipt />} />
           <Route path="/terms&conditions" element={<Terms />} />
         </Routes>
       </main>

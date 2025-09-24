@@ -1,10 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-phone-input-2/lib/style.css";
 import PhoneInput from "react-phone-input-2";
 import "../assets/css/checkout.css";
 import cardsIcons from "../assets/icon/cards.png";
+import { useLocation, useNavigate } from "react-router-dom";
+import axiosWithHeaders from "../helper/axiosWithHeaders";
+import { apis } from "../apis";
+import toast from "react-hot-toast";
 
 const Checkout = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [amount, setAmount] = useState(location?.state?.dollars || 0);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,6 +26,11 @@ const Checkout = () => {
   });
 
   const handleChange = (e) => {
+    if (e.target.name === "card") {
+      const value = e.target.value.replace(/\D/g, '').slice(0, 16); // remove non-digits and limit to 16 chars
+      setFormData({ ...formData, [e.target.name]: value });
+      return;
+    }
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -29,11 +42,44 @@ const Checkout = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   console.log("Form Submitted:", formData);
+
+  // };
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Submitted:", formData);
-    alert("Payment Submitted! ");
+    setLoading(true);
+    try {
+      const response = await axiosWithHeaders.post(apis.PURCHASE_COINS, {
+        coins: amount,
+        acceptTerms: true,
+        acceptPricing: true,
+      });
+      const data = response?.data;
+      if (response?.status === 200 || response?.status === 201) {
+        toast.success(`Purchase successful! You bought ${amount} coins.`);
+        setTimeout(() => {
+          navigate('/history');
+        }, 1500);
+      } else {
+        toast.error(data?.message || "Purchase failed");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong, please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  useEffect(() => {
+    if (!location.state || !location.state.dollars) {
+      navigate("/purchase");
+    }
+  }, [])
 
   return (
     <div className="checkout-dark-wrapper d-flex justify-content-center align-items-center">
@@ -181,8 +227,9 @@ const Checkout = () => {
                     <button
                       type="submit"
                       className="btn btn-warning w-100 mt-4 py-2 fw-semibold fs-6"
+                      disabled={loading}
                     >
-                      Pay Now
+                      {loading ? "Processing..." : `Pay now`}
                     </button>
                   </div>
 
@@ -195,12 +242,12 @@ const Checkout = () => {
                       </h6>
                       <div className="d-flex justify-content-between text-light">
                         <span>Subtotal:</span>
-                        <span className="fw-bold">$50.00</span>
+                        <span className="fw-bold">${amount}</span>
                       </div>
                       <hr className="border-secondary" />
                       <div className="d-flex justify-content-between">
                         <span className="text-light">Total :</span>
-                        <span className="fw-bold text-success">$50.00</span>
+                        <span className="fw-bold text-success">${amount}</span>
                       </div>
                     </div>
                   </div>

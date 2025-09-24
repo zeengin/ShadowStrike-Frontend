@@ -1,6 +1,10 @@
 import novaClicker from "../../assets/games/Nova-Clicker-x22.jpg";
 import fastFoodRush from "../../assets/games/fast-food-rush-xs.jpg";
 import cookieClickerPro from "../../assets/games/Cookie-Clicker-Pro-Game-xs2.jpg";
+import stickman from "../../assets/games/Stack-Fire-Ball-Game-xs.jpg"
+import drift from "../../assets/games/Drift-King-xs.jpg"
+import highway from "../../assets/games/Highway-Traffic-2-xs.jpg"
+import masked from "../../assets/games/Masked-Special-Forces-FPS-xs.jpg"
 import { useUser } from "../../context/UserContext";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -33,9 +37,48 @@ function OurGames() {
         "Love cookies? Want to create the biggest cookie empire the internet has ever seen? Then Cookie Clicker Pro is exactly your game! It's a simple, addictively fun incremental game, packed with sweet strategies.",
       link: "https://cloud.onlinegames.io/games/2025/unity/cookie-clicker-pro/index-og.html",
     },
+    {
+      id: 4,
+      title: "Stickman GTA City",
+      thumb: stickman,
+      img: stickman,
+      description:
+        "You've been digging the internet for ages, looking for a free GTA game to play on your browser, only to end up with games that disappoint faster than a balloon losing air. You might have given up hope, reminiscing about the days of cruising through GTA San Andreas or Vice City with your bro. Think of how much you missed even hearing that iconic sound, the one that plays right as the screen fades to black with a bold 'Wasted!' slapped across it?",
+      link: "https://cloud.onlinegames.io/games/2024/unity3/stickman-gta-city/index-og.html",
+    },
+    {
+      id: 5,
+      title: "Drift King",
+      thumb: drift,
+      img: drift,
+      description:
+        "Drift King stands out among online drift games, offering a unique experience where you can witness the smoke you leave behind from the rearview window. This game surrounds you in every realistic detail, from its premium 3D visuals to the choice of 10 sports cars and 6 maps. The comprehensive tuning options further enhance the game, making it a complete package for drifting enthusiasts.",
+      link: "https://www.onlinegames.io/games/2024/unity/drift-king/index.html",
+    },
+    {
+      id: 6,
+      title: "Highway Traffic",
+      thumb: highway,
+      img: highway,
+      description:
+        `Highway Traffic game is centered around driving down the highway, dodging other cars, and avoiding accidents. It gets tricky because other vehicles are slowing down, speeding up or stopping abruptly, so you always have to keep your attention and be ready to make a quick maneuver. The longer you go without hitting other cars, the more points you collect and the more upgrades you can get. Highway Traffic gets challenging very quickly, so you must build up crazy driving skills to reach higher levels!`,
+      link: "https://www.onlinegames.io/games/2022/unity/highway-traffic/index.html",
+    },
+    {
+      id: 7,
+      title: "Masked Special Forces",
+      thumb: masked,
+      img: masked,
+      description:
+        `Masked Special Forces is a multiplayer first-person shooter game with a myriad of customization options. The game puts you in the shoes of a commander in the battle arena. As a talented warrior, team up, strategize, and take down the opponents one by one. Access to an array of upgradable weapons, armory, kill messages, and victory dances on the main menu.`,
+      link: "https://www.onlinegames.io/games/2022/unity2/masked-special-forces/index.html",
+    },
   ];
 
   const { user, token, loading } = useUser();
+
+
+
 
 
 
@@ -68,7 +111,7 @@ function OurGames() {
             <div className="tabitem active">
               <div className="row cus-mar">
                 {games.map((game) => (
-                  <div className="col-md-6 col-lg-4" key={game.id}>
+                  <div className="col-md-6 col-lg-3" key={game.id}>
                     <div className="single-box">
                       {/* Game Thumbnail */}
                       <div className="position-relative d-center">
@@ -91,11 +134,18 @@ function OurGames() {
                             />
                           </div>
                           <div className="info-area">
-                            <a href={game.link} target="_blank" rel="noreferrer">
+                           {user ? <a href={game.link} target="_blank" rel="noreferrer">
                               <h4 className="visible-slowly-bottom mb-1">
                                 {game.title}
                               </h4>
-                            </a>
+                            </a> : 
+                            <h4 onClick={() => {
+                                toast.dismiss();
+                                toast.error("Please register to play.");
+                              }}
+                               className="visible-slowly-bottom mb-1">
+                                {game.title}
+                              </h4>}
                           </div>
                         </div>
 
@@ -134,15 +184,15 @@ function OurGames() {
         </div>
       </div>
        <Toaster
-        position="top-right"
+        position="bottom-right"
         toastOptions={{
           style: {
-            zIndex:1000000000000,
+            zIndex:1000000000000000,
             background: "#1e1e1e",   // dark background
             color: "#fff",           // white text
             borderRadius: "8px",
             padding: "12px 16px",
-            marginTop:"40px"
+            marginTop:"50px"
           },
           success: {
             style: { background: "#1f3d2b", color: "#b6f2c8" }, // greenish
