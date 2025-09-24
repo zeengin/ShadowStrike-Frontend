@@ -208,7 +208,7 @@ export default function PointsPurchase() {
               className={`btn w-100 fw-semibold ${isCheckoutDisabled || loading ? "btn-secondary" : "btn-warning"
                 }`}
               disabled={isCheckoutDisabled || loading}
-              onClick={()=>navigate('/checkout')}
+              onClick={()=>navigate('/checkout',{state:{dollars}})}
             >
               {loading ? "Recharging..." : "Recharge"}
             </button>
