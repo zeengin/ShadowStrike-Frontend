@@ -168,13 +168,18 @@ export default function PointsPurchase() {
               <span>$ {dollars || 0}</span>
             </div>
 
-            {/* Checkboxes from MUI */}
+            {/* Checkboxes from MUI */}   
             <FormControlLabel
               control={
                 <Checkbox
                   checked={agreeTerms}
                   onChange={(e) => setAgreeTerms(e.target.checked)}
-                  sx={{ color: "white" }}
+                  sx={{
+                    color: "white",
+                    '&.Mui-checked': {
+                      color: '#ffc107'
+                    },
+                  }}
                 />
               }
               label={
@@ -192,7 +197,11 @@ export default function PointsPurchase() {
                 <Checkbox
                   checked={agreePricing}
                   onChange={(e) => setAgreePricing(e.target.checked)}
-                  sx={{ color: "white" }}
+                  sx={{ color: "white",
+                    '&.Mui-checked': {
+                      color: '#ffc107'
+                    },
+                   }}
                 />
               }
               label="I accept the pricing"
@@ -208,7 +217,7 @@ export default function PointsPurchase() {
               className={`btn w-100 fw-semibold ${isCheckoutDisabled || loading ? "btn-secondary" : "btn-warning"
                 }`}
               disabled={isCheckoutDisabled || loading}
-              onClick={()=>navigate('/checkout',{state:{dollars}})}
+              onClick={() => navigate('/checkout', { state: { dollars } })}
             >
               {loading ? "Recharging..." : "Recharge"}
             </button>

@@ -6,9 +6,9 @@ import logo from "../assets/logo-text.png";
 
 
 const Receipt = () => {
-    const {transactionId} = useParams();
+    const { transactionId } = useParams();
     const [receiptData, setReceiptData] = React.useState(null);
-    
+
     const viewReceipt = async () => {
         try {
             const response = await axiosWithHeaders.get(`${apis.TRANSANCTIONS}/${transactionId}/receipt`);
@@ -23,8 +23,8 @@ const Receipt = () => {
     }, []);
 
     const handlePrint = () => {
-    window.print();
-  };
+        window.print();
+    };
 
 
     return (
@@ -81,7 +81,7 @@ const Receipt = () => {
 
                 {/* Print Button */}
                 <div className="text-center">
-                    <button onClick={handlePrint} className="btn btn-primary w-100 py-2 fw-semibold" style={{ backgroundColor: "#5a48f5", borderRadius: "8px" }}>
+                    <button onClick={handlePrint} className="btn btn-warning w-100 py-2 fw-semibold" style={{ borderRadius: "8px" }}>
                         Print Receipt
                     </button>
                 </div>
