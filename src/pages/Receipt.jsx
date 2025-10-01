@@ -11,7 +11,7 @@ const Receipt = () => {
 
     const viewReceipt = async () => {
         try {
-            const response = await axiosWithHeaders.get(`${apis.TRANSANCTIONS}/${transactionId}/receipt`);
+            const response = await axiosWithHeaders.get(`${apis.TRANSACTIONS}/${transactionId}/receipt`);
             console.log(response.data)
             setReceiptData(response?.data?.receipt);
         } catch (error) {

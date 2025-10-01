@@ -65,19 +65,19 @@ const Signup = () => {
             }
 
 
-            const res = await fetch(apis?.SIGNUP, {
+            const res = await fetch(apis.SIGNUP, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    firstname: formData?.firstName,
-                    lastname: formData?.lastName,
+                    first_name: formData?.firstName,
+                    last_name: formData?.lastName,
+                    username: formData?.username,
                     email: formData?.email,
-                    phone: formData?.phone,
+                    phone_number: formData?.phone,
                     password: formData?.password,
-                    confirmPassword: formData?.password,
-                    role: "user",
+                    role_id: 3,
                 }),
             });
 

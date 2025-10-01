@@ -22,7 +22,7 @@ export const UserProvider = ({ children }) => {
         const headers = { 'Authorization': `Bearer ${token}` }
         const res = await axios.get(`${apis.GET_PROFILE}`, { headers });
         console.log("API has been invoked in context", res);
-        setUser(res?.data?.profile);
+        setUser(res?.data?.user);
       }
     } catch (err) {
       console.error(err);

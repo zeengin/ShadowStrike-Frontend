@@ -210,17 +210,16 @@ export default function PointsPurchase() {
             <p className="text-white-50 small mb-3">
               <strong>Billing Terms:</strong> This purchase is a{" "}
               <b>one-time sale</b>. Please review the details before proceeding to
-              checkout.
+              checkout. 
             </p>
 
             <button
-              className={`btn w-100 fw-semibold ${isCheckoutDisabled || loading ? "btn-secondary" : "btn-warning"
-                }`}
+              className={`btn w-100 fw-semibold ${isCheckoutDisabled || loading ? "btn-secondary" : "btn-warning"}`}
               disabled={isCheckoutDisabled || loading}
               onClick={() => navigate('/checkout', { state: { dollars } })}
             >
               {loading ? "Recharging..." : "Recharge"}
-            </button>
+            </button> 
 
             {alert.message && (
               <Stack className="mt-3">

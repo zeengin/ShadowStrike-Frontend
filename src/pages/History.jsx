@@ -28,7 +28,7 @@ export default function History() {
   const fetchTransactions = async () => {
     try {
       setLoading(true);
-      const { data } = await axiosWithHeaders.get(apis.TRANSANCTIONS);
+      const { data } = await axiosWithHeaders.get(apis.TRANSACTIONS);
 
       const mappedDeposits = data?.map((txn) => ({
         id: txn?.transactionId,
@@ -91,7 +91,7 @@ const handleViewReceipt = async (transactionId) => {
     setButtonLoadingId(transactionId);
 
     const response = await axiosWithHeaders.get(
-      `${apis.TRANSANCTIONS}/${transactionId}/receipt`,
+      `${apis.TRANSACTIONS}/${transactionId}/receipt`,
       { responseType: "blob" } // important for files
     );
 
