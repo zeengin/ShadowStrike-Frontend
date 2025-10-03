@@ -44,6 +44,7 @@ function App() {
           <Route path="/history" element={<History />} />
           <Route path="/receipt/:transactionId" element={<Receipt />} />
           <Route path="/terms&conditions" element={<Terms />} />
+          <Route path="/dashboard" element={<Terms />} />
         </Routes>
       </main>
       

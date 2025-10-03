@@ -77,7 +77,7 @@ const Signup = () => {
                     email: formData?.email,
                     phone_number: formData?.phone,
                     password: formData?.password,
-                    role_id: 3,
+                    role_id: 3, // role_id 3 is for players
                 }),
             });
 

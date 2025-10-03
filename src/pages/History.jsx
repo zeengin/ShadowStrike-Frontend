@@ -21,22 +21,24 @@ export default function History() {
     "Amount Paid",
     "Amount Loaded",
     "Status",
-    "Receipt",
+    "Brand"
+    // "Receipt",
   ];
 
 
   const fetchTransactions = async () => {
     try {
       setLoading(true);
-      const { data } = await axiosWithHeaders.get(apis.TRANSACTIONS);
+      const { data } = await axiosWithHeaders.get(apis.DEPOSITS);
 
-      const mappedDeposits = data?.map((txn) => ({
-        id: txn?.transactionId,
-        date: moment(txn?.date).format("YYYY-MM-DD"),
-        provider: txn?.provider,
-        amountpaid: `$${txn?.amountPaid}`,
-        amountloaded: `${txn?.amountLoaded} Coins`,
+      const mappedDeposits = data?.data?.map((txn) => ({
+        id: txn?.id,
+        date: moment(txn?.created_at).format("YYYY-MM-DD"),
+        provider: txn?.provider || "Shadowstrike",
+        amountpaid: `$${txn?.load_amount}`,
+        amountloaded: `${txn?.load_amount} Coins`,
         status: txn?.status,
+        brand: txn?.Brand?.slug,
         receipt: (
           <Button
             variant="outlined"
@@ -61,6 +63,7 @@ export default function History() {
         amountpaid: `$${txn.amountPaid}`,
         amountloaded: `-${txn.points} Points`,
         status: txn.status,
+        brand: txn?.Brand?.slug,
         receipt: (
           <Button
             variant="outlined"
@@ -91,7 +94,7 @@ const handleViewReceipt = async (transactionId) => {
     setButtonLoadingId(transactionId);
 
     const response = await axiosWithHeaders.get(
-      `${apis.TRANSACTIONS}/${transactionId}/receipt`,
+      `${apis.DEPOSITS}/${transactionId}/receipt`,
       { responseType: "blob" } // important for files
     );
 

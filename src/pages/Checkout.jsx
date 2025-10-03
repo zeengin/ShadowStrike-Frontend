@@ -53,8 +53,9 @@ const Checkout = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axiosWithHeaders.post(apis.PURCHASE_COINS, {
-        coins: amount,
+      const response = await axiosWithHeaders.post(apis.DEPOSITS, {
+        load_amount: amount,
+        brand_slug:"SHDO2025",
         acceptTerms: true,
         acceptPricing: true,
       });
