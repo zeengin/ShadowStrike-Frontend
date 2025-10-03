@@ -77,11 +77,6 @@ function OurGames() {
 
   const { user, token, loading } = useUser();
 
-
-
-
-
-
   return (
     <section className="our-games team-members index-two overflow-hidden pt-120 pb-120">
       <div className="container singletab">

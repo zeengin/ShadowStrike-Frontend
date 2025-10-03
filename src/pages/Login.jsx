@@ -36,7 +36,7 @@ const Login = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          "username": formData?.emailOrPhone,
+          "email": formData?.emailOrPhone,
           "password": formData?.password
         }),
       });
@@ -46,14 +46,14 @@ const Login = () => {
       if (!res.ok) {
         throw new Error("Login failed");
       }
-
+      console.log("logindata",data);
       // Save token in localStorage
       localStorage.setItem("token", data.token);
 
       setSuccess("Login successful! Redirecting...");
       localStorage.setItem("ss_user", JSON.stringify({role:data?.role,user_id:data?.user_id}))
       fetchUser();
-      setTimeout(() => window.location.href = "/", 1500);
+      setTimeout(() => window.location.href = "/", 1000);
     } catch (err) {
       setError(err.message);
       setTimeout(()=>{

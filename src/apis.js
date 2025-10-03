@@ -7,8 +7,8 @@ export const baseurl = getBaseUrl();
 export const apis = {
     LOGIN:`${baseurl}/api/auth/login`,
     SIGNUP:`${baseurl}/api/auth/signup`,
-    GET_PROFILE:`${baseurl}/api/profile`,
+    GET_PROFILE:`${baseurl}/api/users/userdata`,
     GET_USER:`${baseurl}/api/users`,
     PURCHASE_COINS:`${baseurl}/api/coins/purchase`,
-    TRANSANCTIONS:`${baseurl}/api/transactions`, // also used to get receipts /<receipt-id>/receipt (prefix of route)
+    DEPOSITS:`${baseurl}/api/deposit`, // also used to get receipts /<receipt-id>/receipt (suffix of route)
 } 

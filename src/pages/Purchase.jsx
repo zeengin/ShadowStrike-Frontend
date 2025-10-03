@@ -168,13 +168,18 @@ export default function PointsPurchase() {
               <span>$ {dollars || 0}</span>
             </div>
 
-            {/* Checkboxes from MUI */}
+            {/* Checkboxes from MUI */}   
             <FormControlLabel
               control={
                 <Checkbox
                   checked={agreeTerms}
                   onChange={(e) => setAgreeTerms(e.target.checked)}
-                  sx={{ color: "white" }}
+                  sx={{
+                    color: "white",
+                    '&.Mui-checked': {
+                      color: '#ffc107'
+                    },
+                  }}
                 />
               }
               label={
@@ -192,7 +197,11 @@ export default function PointsPurchase() {
                 <Checkbox
                   checked={agreePricing}
                   onChange={(e) => setAgreePricing(e.target.checked)}
-                  sx={{ color: "white" }}
+                  sx={{ color: "white",
+                    '&.Mui-checked': {
+                      color: '#ffc107'
+                    },
+                   }}
                 />
               }
               label="I accept the pricing"
@@ -201,17 +210,16 @@ export default function PointsPurchase() {
             <p className="text-white-50 small mb-3">
               <strong>Billing Terms:</strong> This purchase is a{" "}
               <b>one-time sale</b>. Please review the details before proceeding to
-              checkout.
+              checkout. 
             </p>
 
             <button
-              className={`btn w-100 fw-semibold ${isCheckoutDisabled || loading ? "btn-secondary" : "btn-warning"
-                }`}
+              className={`btn w-100 fw-semibold ${isCheckoutDisabled || loading ? "btn-secondary" : "btn-warning"}`}
               disabled={isCheckoutDisabled || loading}
-              onClick={()=>navigate('/checkout',{state:{dollars}})}
+              onClick={() => navigate('/checkout', { state: { dollars } })}
             >
               {loading ? "Recharging..." : "Recharge"}
-            </button>
+            </button> 
 
             {alert.message && (
               <Stack className="mt-3">
