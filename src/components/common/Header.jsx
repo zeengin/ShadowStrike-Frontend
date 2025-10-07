@@ -130,10 +130,10 @@ export default function Header() {
                     onClick={handleClick} // clicking anywhere opens the menu
                   >
                     <Avatar sx={{ bgcolor: "#cfa122" }}>
-                      {user?.firstname?.[0] || "U"}
+                      {user?.first_name?.[0] || "U"}
                     </Avatar>
                     <span className="font-bold">
-                      {user?.firstname || "User"}
+                      {user?.first_name || "User"}
                     </span>
                     <span>
                       {open ?
@@ -156,7 +156,7 @@ export default function Header() {
                   >
                     <MenuItem disabled>
                       <div>
-                        <strong>{user?.firstname} {user?.lastname}</strong>
+                        <strong>{user?.first_name} {user?.last_name}</strong>
                         <div style={{ fontSize: "0.8rem", color: "#aaa" }}>
                           {user?.email}
                         </div>
