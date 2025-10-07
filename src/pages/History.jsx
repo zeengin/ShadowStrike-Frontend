@@ -8,13 +8,13 @@ import { useNavigate } from "react-router-dom";
 
 export default function History() {
   const navigate = useNavigate();
-  const [tab, setTab] = useState(0);
+  const [tab, setTab] = useState(apis.DEPOSITS);
   const [deposits, setDeposits] = useState([]);
   const [withdrawals, setWithdrawals] = useState([]);
   const [loading, setLoading] = useState(false);
   const [buttonLoadingId, setButtonLoadingId] = useState(null); // <-- track clicked row
 
-  const columns = [
+  const depositColumns = [
     "Id",
     "Date",
     "Provider",
@@ -22,15 +22,23 @@ export default function History() {
     "Amount Loaded",
     "Status",
     "Brand"
-    // "Receipt",
+  ];
+  const withdrawColumns = [
+    "Id",
+    "Date",
+    "Provider",
+    "Amount",
+    "Status",
+    "Brand"
   ];
 
 
   const fetchTransactions = async () => {
     try {
       setLoading(true);
-      const { data } = await axiosWithHeaders.get(apis.DEPOSITS);
-
+      const { data } = await axiosWithHeaders.get(tab);
+      console.log("data",data);
+      
       const mappedDeposits = data?.data?.map((txn) => ({
         id: txn?.id,
         date: moment(txn?.created_at).format("YYYY-MM-DD"),
@@ -56,14 +64,14 @@ export default function History() {
         ),
       }));
 
-      const mappedWithdrawals = data.withdrawals?.map((txn) => ({
+      const mappedWithdrawals = data.data?.map((txn) => ({
         id: txn.id,
-        date: txn.date,
-        provider: txn.provider,
-        amountpaid: `$${txn.amountPaid}`,
-        amountloaded: `-${txn.points} Points`,
+        date:  moment(txn?.created_at).format("YYYY-MM-DD"),
+        provider: txn.provider || "shadowstrike",
+        amount: `$${txn.amount}`,
         status: txn.status,
         brand: txn?.Brand?.slug,
+        amount: `$${txn?.amount}`,
         receipt: (
           <Button
             variant="outlined"
@@ -130,14 +138,13 @@ const handleViewReceipt = async (transactionId) => {
 
   useEffect(() => {
     fetchTransactions();
-  }, []);
+  }, [tab]);
 
   return (
     <div className="container pt-120 pb-120" style={{ minHeight: "50vh" }}>
       <div className="d-flex items-center justify-content-between">
         <h2 className="fw-bold text-white mb-4">Transaction History</h2>
-
-        {/* <Tabs
+        <Tabs
           value={tab}
           onChange={(e, newValue) => setTab(newValue)}
           textColor="inherit"
@@ -148,13 +155,14 @@ const handleViewReceipt = async (transactionId) => {
             "& .Mui-selected": { color: "#90caf9" },
           }}
         >
-          <Tab label="Deposits" />
-        </Tabs> */}
+          <Tab label="Deposits" value={apis.DEPOSITS} />
+          <Tab label="Withdrawals" value={apis.WITHDRAWALS} />
+        </Tabs>
       </div>
 
       <Table
-        columns={columns}
-        rows={tab === 0 ? deposits : withdrawals}
+        columns={tab === apis.DEPOSITS ? depositColumns : withdrawColumns}
+        rows={tab === apis.DEPOSITS ? deposits : withdrawals}
         loading={loading}
       />
     </div>
