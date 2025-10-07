@@ -37,11 +37,11 @@ export default function Profile() {
                                 <Avatar
                                     sx={{ bgcolor: "#1976d2", cursor: "default", margin:"10px" }}
                                 >
-                                    {user?.firstname?.[0] || "U"}
+                                    {user?.first_name?.[0] || "U"}
                                 </Avatar>
                                 <div>
                                     <h5 className="mb-1 fw-bold">
-                                        {user?.firstname} {user?.lastname}
+                                        {user?.first_name} {user?.last_name}
                                     </h5>
                                     <p className="mb-0 text-light">
                                         {/* {user?.role} */}
@@ -69,11 +69,11 @@ export default function Profile() {
                             <div className="row mb-3">
                                 <div className="col-md-6">
                                     <p className="text-light fs-6 mb-1">First Name</p>
-                                    <p className="fw-semibold">{user?.firstname}</p>
+                                    <p className="fw-semibold">{user?.first_name}</p>
                                 </div>
                                 <div className="col-md-6">
                                     <p className="text-light fs-6 mb-1">Last Name</p>
-                                    <p className="fw-semibold">{user?.lastname}</p>
+                                    <p className="fw-semibold">{user?.last_name}</p>
                                 </div>
                             </div>
 
@@ -84,7 +84,7 @@ export default function Profile() {
                                 </div>
                                 <div className="col-md-6">
                                     <p className="text-light fs-6 mb-1">Phone</p>
-                                    <p className="fw-semibold">{user?.phone}</p>
+                                    <p className="fw-semibold">{user?.phone_number}</p>
                                 </div>
                             </div>
                         </div>
