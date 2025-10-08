@@ -21,7 +21,8 @@ export default function History() {
     "Amount Paid",
     "Amount Loaded",
     "Status",
-    "Brand"
+    "Brand",
+    "Receipt",
   ];
   const withdrawColumns = [
     "Id",
@@ -29,7 +30,8 @@ export default function History() {
     "Provider",
     "Amount",
     "Status",
-    "Brand"
+    "Brand",
+    "Receipt",
   ];
 
 
@@ -51,7 +53,7 @@ export default function History() {
           <Button
             variant="outlined"
             size="small"
-            onClick={() => navigate(`/receipt/${txn?._id}`)}
+            onClick={() => navigate(`/receipt/${txn?.id}`)}
             sx={{ color: "white", borderColor: "white", minWidth: 80 }}
           >
             {/* {buttonLoadingId == txn?._id ? (
