@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar";
 import logo from "../../assets/logo-text.png";
 import { NavLink } from "react-router-dom";
 import { Avatar, Menu, MenuItem, Divider, ListItemIcon, Box, Typography } from "@mui/material";
-import { Settings, Logout, AccountBalance } from "@mui/icons-material";
+import { Settings, Logout, AccountBalance, Dashboard } from "@mui/icons-material";
 import HistoryIcon from '@mui/icons-material/History';
 import PersonIcon from '@mui/icons-material/Person';
 import { useUser } from "../../context/UserContext";
@@ -180,6 +180,12 @@ export default function Header() {
                         <HistoryIcon fontSize="small" sx={{ color: "white" }} />
                       </ListItemIcon>
                       History
+                    </MenuItem>
+                    <MenuItem component={NavLink} target="_blank" to={import.meta.env.VITE_APP_ADMIN_FRONTEND_BASEURL} onClick={handleClose}>
+                      <ListItemIcon>
+                        <Dashboard fontSize="small" sx={{ color: "white" }} />
+                      </ListItemIcon>
+                      Dashboard
                     </MenuItem>
                     <MenuItem onClick={handleLogout}>
                       <ListItemIcon>

@@ -3,8 +3,6 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import { apis } from "../apis";
-import axiosWithHeaders from "../helper/axiosWithHeaders";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   Card, CardActionArea, Modal, Box, Typography, TextField, Button,
@@ -20,6 +18,7 @@ const coinOptions = [
   { coins: 1000, dollars: 1000 },
   { coins: "Custom", dollars: null },
 ];
+const maximum = 10000000;
 
 export default function PointsPurchase() {
   const [points, setPoints] = useState(20);
@@ -31,6 +30,7 @@ export default function PointsPurchase() {
   const [customOpen, setCustomOpen] = useState(false);
   const [customDollars, setCustomDollars] = useState("");
   const [customCoins, setCustomCoins] = useState("");
+  const [error , setError] = useState(null);
   const navigate = useNavigate();
   const dollars = points; // 1:1 mapping
   const isCheckoutDisabled = !(agreeTerms && agreePricing && points > 0);
@@ -51,63 +51,6 @@ export default function PointsPurchase() {
     setSelectedOption("Custom");
     setCustomOpen(false);
   };
-
-
-  const handlePointsChange = (e) => {
-    let value = Number(e?.target.value)
-    if (value == 0) {
-      value = ""
-    }
-    setPoints(value);
-  };
-
-  const handleDollarsChange = (e) => {
-    let value = Number(e?.target.value)
-    if (value == 0) {
-      value = ""
-    }
-    setPoints(value);
-  };
-
-  const handleCheckout = async () => {
-    setLoading(true);
-    setAlert({ type: "", message: "" });
-
-    try {
-      const response = await axiosWithHeaders.post(apis.PURCHASE_COINS, {
-        coins: points,
-        acceptTerms: agreeTerms,
-        acceptPricing: agreePricing,
-      });
-
-      const data = response?.data;
-      if (response?.status === 200) {
-        setAlert({
-          type: "success",
-          message: `Purchase successful! You bought ${points} coins.`,
-        });
-        setTimeout(() => {
-          navigate('/history');
-        }, 1500);
-      } else {
-        setAlert({
-          type: "error",
-          message: data?.message || "Purchase failed",
-        });
-      }
-    } catch (error) {
-      setAlert({
-        type: "error",
-        message: "Network error, please try again later.",
-      });
-    } finally {
-      setLoading(false);
-      setTimeout(() => {
-        setAlert({ type: "", message: "" })
-      }, 4000);
-    }
-  };
-
 
   return (
     <>
@@ -267,12 +210,21 @@ export default function PointsPurchase() {
               placeholder="Enter your amount"
               value={customDollars}
               onChange={(e) => {
-                setCustomDollars(e.target.value);
-                setCustomCoins(e.target.value);
+                const val = e.target.value;
+                if(val < 0 || val > maximum){
+                  setError(true);
+                  setTimeout(()=>setError(false),4000)
+                  return;
+                }
+                setError(false);
+                setCustomDollars(val);
+                setCustomCoins(val);
               }}
               autoComplete="off"
               required
+              style={{border: error ? '1px solid #7d2b2b' : ""}}
             />
+            {error && <span style={{fontSize:"12px",color:"#7d2b2b",paddingInlineStart:"5px"}} >Amount should be between 1 to {maximum}</span>}
           </div>
 
           <Typography variant="body2" gutterBottom>
