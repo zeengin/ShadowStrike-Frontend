@@ -202,7 +202,7 @@ export default function PointsPurchase() {
           </Typography>
 
           <div className="single-input text-start">
-            <label htmlFor="dollars">Dollars</label>
+            <label htmlFor="dollars">Dollar ($)</label>
             <input
               type="number"
               id="dollars"
