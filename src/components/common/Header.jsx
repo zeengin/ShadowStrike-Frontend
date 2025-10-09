@@ -173,19 +173,13 @@ export default function Header() {
                       <ListItemIcon>
                         <AccountBalance fontSize="small" sx={{ color: "white" }} />
                       </ListItemIcon>
-                      Buy Points
+                      Buy Coins
                     </MenuItem>
                     <MenuItem component={NavLink} to="/history" onClick={handleClose}>
                       <ListItemIcon>
                         <HistoryIcon fontSize="small" sx={{ color: "white" }} />
                       </ListItemIcon>
                       History
-                    </MenuItem>
-                    <MenuItem component={NavLink} target="_blank" to={import.meta.env.VITE_APP_ADMIN_FRONTEND_BASEURL} onClick={handleClose}>
-                      <ListItemIcon>
-                        <Dashboard fontSize="small" sx={{ color: "white" }} />
-                      </ListItemIcon>
-                      Dashboard
                     </MenuItem>
                     <MenuItem onClick={handleLogout}>
                       <ListItemIcon>
