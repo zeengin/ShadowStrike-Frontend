@@ -175,7 +175,7 @@ export default function Header() {
                       </ListItemIcon>
                       Buy Coins
                     </MenuItem>
-                    <MenuItem component={NavLink} to="/history" onClick={handleClose}>
+                    <MenuItem component={NavLink} to="/dashboard" onClick={handleClose}>
                       <ListItemIcon>
                         <HistoryIcon fontSize="small" sx={{ color: "white" }} />
                       </ListItemIcon>

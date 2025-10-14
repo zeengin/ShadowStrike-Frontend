@@ -12,4 +12,6 @@ export const apis = {
     PURCHASE_COINS:`${baseurl}/api/coins/purchase`,
     DEPOSITS:`${baseurl}/api/deposit`, // also used to get receipts /<receipt-id>/receipt (suffix of route)
     WITHDRAWALS:`${baseurl}/api/withdrawal`,
+    GET_PLAYER_BRANDS: `${baseurl}/api/brand/player`,
+
 } 

@@ -20,6 +20,9 @@ import ScrollToTop from './components/common/ScrollToTop';
 import Terms from './pages/Terms';
 import Checkout from './pages/Checkout';
 import Receipt from './pages/Receipt';
+import PlayerDashboard from './pages/PlayerDashboard';
+import DepositForm from './pages/DepositForm';
+import WithdrawalForm from './pages/WithdrawalForm';
 
 
 
@@ -33,6 +36,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<PlayerDashboard />} />
+          <Route path="/:slug/deposits" element={<DepositForm />} />
+          <Route path="/:slug/withdrawals" element={<WithdrawalForm />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="/entertainment" element={<Entertainment />} />
@@ -41,10 +47,8 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/purchase" element={<Purchase />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/history" element={<History />} />
           <Route path="/receipt/:transactionId" element={<Receipt />} />
           <Route path="/terms&conditions" element={<Terms />} />
-          <Route path="/dashboard" element={<Terms />} />
         </Routes>
       </main>
       
