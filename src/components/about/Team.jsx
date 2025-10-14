@@ -11,8 +11,8 @@ import member6 from "../../assets/team-members-6.png"
 
 const Team = () => {
 
-    useEffect(()=>{
-         // team-carousel
+  useEffect(() => {
+    // team-carousel
     const slidesShowTeam = 4;
     $(".team-carousel").not('.slick-initialized').slick({
       infinite: false,
@@ -69,30 +69,30 @@ const Team = () => {
     var scrollCount = null;
     var scroll = null;
     teamSlider.on('wheel', function (e) {
-        e.preventDefault();
-        clearTimeout(scroll);
-        scroll = setTimeout(function () { scrollCount = 0; }, 200);
-        if (scrollCount) return 0;
-        scrollCount = 1;
-        const delta = e.originalEvent.deltaY;
-        const sliderElement = $(this);
-        const slideCount = sliderElement.slick('getSlick').slideCount;
-        const currentSlide = sliderElement.slick('slickCurrentSlide');
-        const isLastSlide = currentSlide === slideCount - slidesShowTeam;
-        const isFirstSlide = currentSlide === 0;
-        if(isLastSlide && delta > 0){
-            window.scrollBy(0, 100);
-        }else if (isFirstSlide && delta < 0) {
-            window.scrollBy(0, -100);
-        }else {
-            if (delta < 0) {
-                sliderElement.slick('slickPrev');
-            } else {
-                sliderElement.slick('slickNext');
-            }
+      e.preventDefault();
+      clearTimeout(scroll);
+      scroll = setTimeout(function () { scrollCount = 0; }, 200);
+      if (scrollCount) return 0;
+      scrollCount = 1;
+      const delta = e.originalEvent.deltaY;
+      const sliderElement = $(this);
+      const slideCount = sliderElement.slick('getSlick').slideCount;
+      const currentSlide = sliderElement.slick('slickCurrentSlide');
+      const isLastSlide = currentSlide === slideCount - slidesShowTeam;
+      const isFirstSlide = currentSlide === 0;
+      if (isLastSlide && delta > 0) {
+        window.scrollBy(0, 100);
+      } else if (isFirstSlide && delta < 0) {
+        window.scrollBy(0, -100);
+      } else {
+        if (delta < 0) {
+          sliderElement.slick('slickPrev');
+        } else {
+          sliderElement.slick('slickNext');
         }
+      }
     });
-    },[])
+  }, [])
 
   return (
     <section className="team-members pb-120 bg-transparent">
