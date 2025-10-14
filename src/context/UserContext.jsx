@@ -18,8 +18,9 @@ export const UserProvider = ({ children }) => {
   // Fetch user from API
   const fetchUser = async () => {
     try {
-      if (token) {
-        const headers = { 'Authorization': `Bearer ${token}` }
+      const tk = localStorage.getItem('token');
+      if (tk) {
+        const headers = { 'Authorization': `Bearer ${tk}` }
         const res = await axios.get(`${apis.GET_PROFILE}`, { headers });
         console.log("API has been invoked in context", res);
         setUser(res?.data?.user);

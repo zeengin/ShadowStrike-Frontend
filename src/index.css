@@ -5844,3 +5844,25 @@ li {
 .entertainment_games .single-box {
     margin-bottom: 20px;
 }
+
+.dashboard {
+    margin-top: 80px !important;
+    margin-bottom: 80px !important;
+}
+
+.dashboard .shape-area img {
+    position: fixed;
+    animation: rotate 35s linear infinite
+}
+
+.dashboard .shape-area .shape-1 {
+    right: 0;
+    top: 6%;
+    z-index: -100;
+}
+
+.dashboard .shape-area .shape-2 {
+    bottom: 10%;
+    left: 0;
+    z-index: -100;
+}

@@ -1,23 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Alert from "@mui/material/Alert";
-import Stack from "@mui/material/Stack";
 import { NavLink, useNavigate } from "react-router-dom";
 import {
-  Card, CardActionArea, Modal, Box, Typography, TextField, Button,
+  Card,
+  CardActionArea,
+  Modal,
+  Box,
+  Typography,
+  Button,
+  Skeleton,
 } from "@mui/material";
 import { RiCopperCoinFill } from "react-icons/ri";
+import { apis } from "../apis";
+import axiosWithHeaders from "../helper/axiosWithHeaders";
 
-
-const coinOptions = [
-  { coins: 20, dollars: 20 },
-  { coins: 50, dollars: 50 },
-  { coins: 100, dollars: 100 },
-  { coins: 500, dollars: 500 },
-  { coins: 1000, dollars: 1000 },
-  { coins: "Custom", dollars: null },
-];
 const maximum = 10000000;
 
 export default function PointsPurchase() {
@@ -25,12 +22,12 @@ export default function PointsPurchase() {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [agreePricing, setAgreePricing] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState({ type: "", message: "" });
-  const [selectedOption, setSelectedOption] = useState(coinOptions[0]);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [coinOptions, setCoinOptions] = useState([]);
   const [customOpen, setCustomOpen] = useState(false);
   const [customDollars, setCustomDollars] = useState("");
   const [customCoins, setCustomCoins] = useState("");
-  const [error , setError] = useState(null);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const dollars = points; // 1:1 mapping
   const isCheckoutDisabled = !(agreeTerms && agreePricing && points > 0);
@@ -52,6 +49,24 @@ export default function PointsPurchase() {
     setCustomOpen(false);
   };
 
+  const fetchCoinOptions = async () => {
+    try {
+      setLoading(true);
+      const response = await axiosWithHeaders.get(apis?.GET_PURCHASE_OPTIONS);
+      const data = response?.data?.options || [];
+      setCoinOptions([...data, { coins: "Custom" }]);
+      setSelectedOption(data[0]?.coins);
+    } catch (error) {
+      console.log("Error while fetching options", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCoinOptions();
+  }, []);
+
   return (
     <>
       <div className="container pt-120 pb-120 bg-transparent text-white">
@@ -65,37 +80,70 @@ export default function PointsPurchase() {
             </p>
 
             <div className="row g-2 my-2">
-              {coinOptions.map((option, idx) => (
-                <div className="col-12 col-md-6 col-lg-4" key={idx}>
-                  <Card
-                    className={`text-center border-0 shadow `}
-                    sx={{
-                      backgroundColor: "#1e1e1e",
-                      color: "white",
-                      borderRadius: "12px",
-                      border: selectedOption === option.coins ? "1px solid #cfa122 !important" : "1px solid transparent",
-                    }}
-                  >
-                    <CardActionArea onClick={() => handleSelect(option)}>
-                      <Box p={1}>
-                        <span style={{ color: "#cfa122" }} className="d-flex py-2 fs-5 align-items-center gap-1 justify-content-center">
-                          <RiCopperCoinFill /> {option.coins}
-                        </span>
-                        {option.dollars && (
-                          <span className="text-white-50">
-                            $ {option.dollars}
-                          </span>
-                        )}
-                        {option.coins === "Custom" && (
-                          <span className="text-white-50">
-                            Enter amount
-                          </span>
-                        )}
-                      </Box>
-                    </CardActionArea>
-                  </Card>
-                </div>
-              ))}
+              {loading
+                ?  Array.from({ length: 6 }).map((_, idx) => (
+                    <div className="col-12 col-md-6 col-lg-4" key={idx}>
+                      <Card
+                        sx={{
+                          backgroundColor: "#1e1e1e",
+                          borderRadius: "12px",
+                          p: 2,
+                          textAlign: "center",
+                        }}
+                      >
+                        <Skeleton
+                          variant="text"
+                          width="100%"
+                          height={20}
+                          sx={{ bgcolor: "#333", mt: 1 }}
+                        />
+                        <Skeleton
+                          variant="text"
+                          width="100%"
+                          height={20}
+                          sx={{ bgcolor: "#333", mt: 1 }}
+                        />
+                      </Card>
+                    </div>
+                  ))
+                :
+                  coinOptions?.map((option, idx) => (
+                    <div className="col-12 col-md-6 col-lg-4" key={idx}>
+                      <Card
+                        className="text-center border-0 shadow"
+                        sx={{
+                          backgroundColor: "#1e1e1e",
+                          color: "white",
+                          borderRadius: "12px",
+                          border:
+                            selectedOption === option.coins
+                              ? "1px solid #cfa122"
+                              : "1px solid transparent",
+                        }}
+                      >
+                        <CardActionArea onClick={() => handleSelect(option)}>
+                          <Box p={1}>
+                            <span
+                              style={{ color: "#cfa122" }}
+                              className="d-flex py-2 fs-5 align-items-center gap-1 justify-content-center"
+                            >
+                              <RiCopperCoinFill /> {option.coins}
+                            </span>
+                            {option.coins !== "Custom" && (
+                              <span className="text-white-50">
+                                $ {option.coins}
+                              </span>
+                            )}
+                            {option.coins === "Custom" && (
+                              <span className="text-white-50">
+                                Enter amount
+                              </span>
+                            )}
+                          </Box>
+                        </CardActionArea>
+                      </Card>
+                    </div>
+                  ))}
             </div>
           </div>
 
@@ -104,14 +152,15 @@ export default function PointsPurchase() {
             <h4 className="fw-semibold mb-3">Recharge Totals</h4>
             <div className="d-flex justify-content-between mb-2">
               <span>Total Coins</span>
-              <span className="fw-semibold d-flex align-items-center"><RiCopperCoinFill /> {points || 0}</span>
+              <span className="fw-semibold d-flex align-items-center">
+                <RiCopperCoinFill /> {points || 0}
+              </span>
             </div>
             <div className="d-flex justify-content-between fs-5 fw-bold mb-3">
               <span>Total Dollars</span>
               <span>$ {dollars || 0}</span>
             </div>
 
-            {/* Checkboxes from MUI */}   
             <FormControlLabel
               control={
                 <Checkbox
@@ -119,8 +168,8 @@ export default function PointsPurchase() {
                   onChange={(e) => setAgreeTerms(e.target.checked)}
                   sx={{
                     color: "white",
-                    '&.Mui-checked': {
-                      color: '#ffc107'
+                    "&.Mui-checked": {
+                      color: "#ffc107",
                     },
                   }}
                 />
@@ -140,11 +189,12 @@ export default function PointsPurchase() {
                 <Checkbox
                   checked={agreePricing}
                   onChange={(e) => setAgreePricing(e.target.checked)}
-                  sx={{ color: "white",
-                    '&.Mui-checked': {
-                      color: '#ffc107'
+                  sx={{
+                    color: "white",
+                    "&.Mui-checked": {
+                      color: "#ffc107",
                     },
-                   }}
+                  }}
                 />
               }
               label="I accept the pricing"
@@ -152,36 +202,24 @@ export default function PointsPurchase() {
 
             <p className="text-white-50 small mb-3">
               <strong>Billing Terms:</strong> This purchase is a{" "}
-              <b>one-time sale</b>. Please review the details before proceeding to
-              checkout. 
+              <b>one-time sale</b>. Please review the details before proceeding
+              to checkout.
             </p>
 
             <button
-              className={`btn w-100 fw-semibold ${isCheckoutDisabled || loading ? "btn-secondary" : "btn-warning"}`}
+              className={`btn w-100 fw-semibold ${
+                isCheckoutDisabled || loading ? "btn-secondary" : "btn-warning"
+              }`}
               disabled={isCheckoutDisabled || loading}
-              onClick={() => navigate('/checkout', { state: { dollars } })}
+              onClick={() => navigate("/checkout", { state: { dollars } })}
             >
               {loading ? "Recharging..." : "Recharge"}
-            </button> 
-
-            {alert.message && (
-              <Stack className="mt-3">
-                <Alert
-                  severity={alert.type}
-                  variant="filled"
-                  sx={{
-                    bgcolor:
-                      alert.type === "success" ? "success.dark" : "error.dark",
-                    color: "white",
-                  }}
-                >
-                  {alert.message}
-                </Alert>
-              </Stack>
-            )}
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Custom Amount Modal */}
       <Modal
         open={customOpen}
         onClose={() => setCustomOpen(false)}
@@ -211,9 +249,9 @@ export default function PointsPurchase() {
               value={customDollars}
               onChange={(e) => {
                 const val = e.target.value;
-                if(val < 0 || val > maximum){
+                if (val < 0 || val > maximum) {
                   setError(true);
-                  setTimeout(()=>setError(false),4000)
+                  setTimeout(() => setError(false), 4000);
                   return;
                 }
                 setError(false);
@@ -222,14 +260,26 @@ export default function PointsPurchase() {
               }}
               autoComplete="off"
               required
-              style={{border: error ? '1px solid #7d2b2b' : ""}}
+              style={{ border: error ? "1px solid #7d2b2b" : "" }}
             />
-            {error && <span style={{fontSize:"12px",color:"#7d2b2b",paddingInlineStart:"5px"}} >Amount should be between 1 to {maximum}</span>}
+            {error && (
+              <span
+                style={{
+                  fontSize: "12px",
+                  color: "#7d2b2b",
+                  paddingInlineStart: "5px",
+                }}
+              >
+                Amount should be between 1 to {maximum}
+              </span>
+            )}
           </div>
 
           <Typography variant="body2" gutterBottom>
-            You will receive: &nbsp;
-            <span className="text-warning fw-bold">{`${customCoins ? customCoins + " Coins" : ""}`}</span>
+            You will receive:&nbsp;
+            <span className="text-warning fw-bold">
+              {`${customCoins ? customCoins + " Coins" : ""}`}
+            </span>
           </Typography>
 
           <Button
