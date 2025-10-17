@@ -63,7 +63,7 @@ const Checkout = () => {
       if (response?.status === 200 || response?.status === 201) {
         toast.success(`Purchase successful! You bought ${amount} coins.`);
         setTimeout(() => {
-          navigate('/history');
+          navigate('/dashboard');
         }, 1500);
       } else {
         toast.error(data?.message || "Purchase failed");
