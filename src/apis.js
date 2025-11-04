@@ -14,5 +14,7 @@ export const apis = {
     WITHDRAWALS: `${baseurl}/api/withdrawal`,
     GET_PLAYER_BRANDS: `${baseurl}/api/brand/player`,
     GET_PURCHASE_OPTIONS: `${baseurl}/api/purchase-options`,    
+    GENERATE_PAYMENT_TOKEN: `${baseurl}/web/payment/generateClientToken`,    
+    PROCESS_PAYMENT: `${baseurl}/web/payment/processPayment`,    
 
 } 
