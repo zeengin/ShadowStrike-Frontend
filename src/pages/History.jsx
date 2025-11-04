@@ -43,7 +43,7 @@ export default function History() {
       setLoading(true);
       console.log("fetching transactions for tab:", tab, "and brand:", selectedBrand);
       const brandId = brandOptions.find(item => item?.value == selectedBrand?.value)
-      const { data } = await axiosWithHeaders.get(`${tab}?brand_id=${brandId?.id}`);
+      const { data } = await axiosWithHeaders.get(`${tab}?brand_id=${brandId?.id}&limit=100`);
       console.log("data", data);
 
       const mappedDeposits = data?.data?.map((txn) => ({
