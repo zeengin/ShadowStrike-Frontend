@@ -119,7 +119,7 @@ const Checkout = () => {
       // Send payment data to backend
       const response = await axiosWithHeaders.post(apis.PROCESS_PAYMENT, {
         load_amount: amount?.toString(),
-        brand_slug: "SHDO2025",
+        brand_slug: location?.state?.slug ||  "SHDO2025",
         acceptTerms: true,
         acceptPricing: true,
         payment_method_nonce: nonce,
