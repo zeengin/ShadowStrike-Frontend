@@ -330,6 +330,7 @@ a:hover {
     border-radius: 5px;
     padding: 20px 20px !important;
 }
+
 .box-style.box-first:before {
     background-color: rgba(0, 0, 0, 0)
 }
@@ -2521,10 +2522,12 @@ li {
     color: var(--p300);
     text-decoration: underline
 }
+
 .footer-section .footer-bottom {
     background: #000;
     border-radius: 0;
 }
+
 .box-items {
     z-index: -1;
     top: -35px
@@ -5667,13 +5670,15 @@ li {
         width: 50px
     }
 
-  .sidebar-wrapper .sidebar-content {
-    left: 0;
-    top: 20px;
-}
-.sidebar-close.mobile-menu {
-    padding-left: 20px;
-}
+    .sidebar-wrapper .sidebar-content {
+        left: 0;
+        top: 20px;
+    }
+
+    .sidebar-close.mobile-menu {
+        padding-left: 20px;
+    }
+
     .banner-section .col-10 {
         width: 100% !important
     }
@@ -5787,7 +5792,9 @@ li {
 
 .technology_icon span {
     margin-top: 20px;
-    font-weight: 600; width: 100%; display: inline-block;
+    font-weight: 600;
+    width: 100%;
+    display: inline-block;
 }
 
 
@@ -5799,13 +5806,16 @@ li {
 
 .technologies_tabs li button.active {
     color: #fff !important;
-}.box-style.box-first p {
+}
+
+.box-style.box-first p {
     text-overflow: ellipsis;
     -webkit-line-clamp: 5;
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
 }
+
 .bg-dark2 {
     background: #ffffff1f;
     padding: 30px;
@@ -5867,18 +5877,25 @@ li {
     z-index: -100;
 }
 
-.react-tel-input .form-control{
-    height:40px !important;
+.react-tel-input .form-control {
+    height: 40px !important;
     border-width: 1px;
 }
 
 
-.braintree-dropin-container input{
+.braintree-dropin-container input {
     color: black !important;
 }
-#credit-card-number{
+
+#credit-card-number {
     color: black !important;
 }
-#credit-card-number:focus{
+
+#credit-card-number:focus {
     color: black !important;
+}
+
+.paypal-button-style {
+    z-index: 0 !important;
+    position:relative !important;
 }
