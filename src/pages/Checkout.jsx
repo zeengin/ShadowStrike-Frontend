@@ -266,6 +266,7 @@ const Checkout = () => {
                             const payload = await actions.braintree.tokenizePayment(data);
                             handleSubmit(payload.nonce)
                           }}
+                          className="paypal-button-style"
                         />
                     </PayPalScriptProvider>}
                   </div>
