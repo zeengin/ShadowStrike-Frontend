@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router";
 import { useUser } from "../context/UserContext";
 import axiosWithHeaders from "../helper/axiosWithHeaders";
 import { apis } from "../apis";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useModal } from "../helper/useModal";
 import LoginModal from "../components/authentication/LoginModal";
 import SignupModal from "../components/authentication/SignupModal";
@@ -31,6 +31,13 @@ const DepositForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!form?.coins){
+      toast.error("Please insert coins.");
+      return;
+    }
+    navigate("/checkout", { state: { dollars:form?.coins, slug } })
+    return;
+
     try {
       setLoading(true);
       const body = {
@@ -246,6 +253,33 @@ const DepositForm = () => {
         <SignupModal isOpen={signupModal} onClose={back} onBack={back} onSignup={handleSignup} />
       </div>
       </div>
+       <Toaster
+                position="top-center"
+                toastOptions={{
+                    style: {
+                        zIndex: 1000000000000,
+                        background: "#1e1e1e",
+                        color: "#fff",
+                        borderRadius: "8px",
+                        padding: "12px 16px",
+                        marginTop: "80px"
+                    },
+                    success: {
+                        style: { background: "#1f3d2b", color: "#b6f2c8" }, // greenish
+                        iconTheme: {
+                            primary: "#22c55e",
+                            secondary: "#fff",
+                        },
+                    },
+                    error: {
+                        style: { background: "#3d1f1f", color: "#f2b6b6" }, // reddish
+                        iconTheme: {
+                            primary: "#ef4444",
+                            secondary: "#fff",
+                        },
+                    },
+                }}
+            />
     </section>
   );
 };
