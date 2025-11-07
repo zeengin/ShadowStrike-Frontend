@@ -5676,7 +5676,7 @@ li {
     }
 
     .sidebar-close.mobile-menu {
-        padding-left: 20px;
+        padding-left: 10px;
     }
 
     .banner-section .col-10 {
@@ -5898,4 +5898,13 @@ li {
 .paypal-button-style {
     z-index: 0 !important;
     position:relative !important;
+}
+
+@media(max-width: 500px) {
+    .typing{
+        font-size: 45px !important;
+    }
+    .about-block .counter-item::before {
+        width: 100%;
+    }
 }

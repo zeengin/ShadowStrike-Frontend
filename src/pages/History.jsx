@@ -120,7 +120,7 @@ export default function History() {
           <select
             className="bg-dark text-white border border-white rounded-2 px-2 py-1"
             style={{
-              minWidth: "200px",
+              minWidth: "150px",
               outline: "none",
               backgroundColor: "#1e1e1e", // deep dark background
               color: "white",

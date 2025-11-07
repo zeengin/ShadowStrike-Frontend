@@ -73,7 +73,7 @@ export default function PointsPurchase() {
         <h2 className="mb-4 fw-bold">Purchase Coins</h2>
         <div className="row g-5">
           {/* Left Section */}
-          <div className="col-md-6 p-4">
+          <div className="col-md-6 p-sm-4">
             <p className="text-white-50">
               Purchase coins to use across games. <br />
               <span className="fw-semibold text-white">1 Dollar = 1 Coin</span>
@@ -108,7 +108,7 @@ export default function PointsPurchase() {
                   ))
                 :
                   coinOptions?.map((option, idx) => (
-                    <div className="col-12 col-md-6 col-lg-4" key={idx}>
+                    <div className="col-12 col-sm-6 col-lg-4" key={idx}>
                       <Card
                         className="text-center border-0 shadow"
                         sx={{
@@ -148,7 +148,7 @@ export default function PointsPurchase() {
           </div>
 
           {/* Right Section */}
-          <div className="col-md-6 bg-secondary bg-opacity-10 p-4 rounded">
+          <div className="col-md-6 bg-secondary bg-opacity-10 p-4 rounded mt-0">
             <h4 className="fw-semibold mb-3">Recharge Totals</h4>
             <div className="d-flex justify-content-between mb-2">
               <span>Total Coins</span>

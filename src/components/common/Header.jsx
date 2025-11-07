@@ -2,56 +2,53 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import logo from "../../assets/logo-text.png";
 import { NavLink } from "react-router-dom";
-import { Avatar, Menu, MenuItem, Divider, ListItemIcon, Box, Typography } from "@mui/material";
-import { Settings, Logout, AccountBalance, Dashboard } from "@mui/icons-material";
-import HistoryIcon from '@mui/icons-material/History';
-import PersonIcon from '@mui/icons-material/Person';
+import {
+  Avatar,
+  Menu,
+  MenuItem,
+  Divider,
+  ListItemIcon,
+  Box,
+} from "@mui/material";
+import {
+  Logout,
+  AccountBalance,
+} from "@mui/icons-material";
+import HistoryIcon from "@mui/icons-material/History";
+import PersonIcon from "@mui/icons-material/Person";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import { useUser } from "../../context/UserContext";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import $ from "jquery";
 
 export default function Header() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [showUserAvatar, setShowUserAvatar] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const open = Boolean(anchorEl);
-  const { user, token, loading } = useUser();
+  const { user, token } = useUser();
 
-
-  useEffect(() => {
-    var sidebarBtn = $(".sidebar-wrapper .sidebar-close");
-    var changeBtn = $(".sidebar-wrapper .sidebar-close i");
-    var sidebarWrapper = $(".sidebar-wrapper");
-
-    sidebarBtn.on("click", function () {
-      sidebarWrapper.toggleClass("sidebar-active");
-      changeBtn.html(
-        sidebarWrapper.hasClass("sidebar-active") ? "close" : "menu_open"
-      );
-    });
-
-    $(".mobile-menu").on("click", function () {
-      $(".sidebar-wrapper").toggleClass("active-mobile sidebar-active");
-      $(".mobile-menu i").toggleClass("menu-active");
-      $(".mobile-menu i").html(
-        $(".mobile-menu i").hasClass("menu-active") ? "close" : "menu_open"
-      );
-    });
-  }, []);
-
-
-  useEffect(() => {
-    console.log(user);
-    if (user) {
-      setShowUserAvatar(true)
-    }
-  }, [token, user])
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+  // Handle sidebar open/close
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
   };
 
-  const handleClose = () => {
+  // Disable page scroll when sidebar is open
+  useEffect(() => {
+    document.body.style.overflow = isSidebarOpen ? "hidden" : "auto";
+  }, [isSidebarOpen]);
+
+  // Handle user avatar visibility
+  useEffect(() => {
+    if (user) {
+      setShowUserAvatar(true);
+    }
+  }, [token, user]);
+
+  // Menu handlers
+  const handleMenuClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
@@ -65,12 +62,18 @@ export default function Header() {
     <>
       <header className="header-section header-menu">
         <nav className="navbar w-100 flex-nowrap px-2 py-0 ps-0 navbar-expand-xl">
-          <div class="sidebar-close mobile-menu">
-            <button class="d-center d-grid d-xl-none">
-              <i class="material-symbols-outlined mat-icon fs-four"> menu_open </i>
-              <span class="fs-six">MENU</span>
+          {/* Mobile Sidebar Toggle */}
+          <div className="sidebar-close mobile-menu">
+            <button
+              className="d-center d-grid d-xl-none"
+              onClick={toggleSidebar}
+            >
+              <i className="material-symbols-outlined mat-icon fs-two">
+                {isSidebarOpen ? "close" : "menu_open"}
+              </i>
             </button>
           </div>
+
           {/* Logo */}
           <NavLink
             to="/"
@@ -103,7 +106,7 @@ export default function Header() {
 
             {/* Right Area */}
             <div className="right-area position-relative d-flex gap-3 gap-xxl-6 align-items-center pe-8">
-              {(!showUserAvatar) ? (
+              {!showUserAvatar ? (
                 <>
                   <NavLink
                     to="/login"
@@ -120,14 +123,15 @@ export default function Header() {
                 </>
               ) : (
                 <>
+                  {/* User Avatar and Name */}
                   <Box
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                      gap: 1.5, // space between avatar and name
+                      gap: 1.5,
                       cursor: "pointer",
                     }}
-                    onClick={handleClick} // clicking anywhere opens the menu
+                    onClick={handleMenuClick}
                   >
                     <Avatar sx={{ bgcolor: "#cfa122" }}>
                       {user?.first_name?.[0] || "U"}
@@ -135,16 +139,18 @@ export default function Header() {
                     <span className="font-bold">
                       {user?.first_name || "User"}
                     </span>
-                    <span>
-                      {open ?
-                        <ArrowDropUpIcon fontSize="medium" sx={{ color: "white" }} />
-                        : <ArrowDropDownIcon fontSize="medium" sx={{ color: "white" }} />}
-                    </span>
+                    {open ? (
+                      <ArrowDropUpIcon fontSize="medium" sx={{ color: "white" }} />
+                    ) : (
+                      <ArrowDropDownIcon fontSize="medium" sx={{ color: "white" }} />
+                    )}
                   </Box>
+
+                  {/* Dropdown Menu */}
                   <Menu
                     anchorEl={anchorEl}
                     open={open}
-                    onClose={handleClose}
+                    onClose={handleMenuClose}
                     PaperProps={{
                       sx: {
                         bgcolor: "#222",
@@ -156,31 +162,38 @@ export default function Header() {
                   >
                     <MenuItem disabled>
                       <div>
-                        <strong>{user?.first_name} {user?.last_name}</strong>
+                        <strong>
+                          {user?.first_name} {user?.last_name}
+                        </strong>
                         <div style={{ fontSize: "0.8rem", color: "#aaa" }}>
                           {user?.email}
                         </div>
                       </div>
                     </MenuItem>
+
                     <Divider sx={{ bgcolor: "#444" }} />
-                    <MenuItem component={NavLink} to="/profile" onClick={handleClose}>
+
+                    <MenuItem component={NavLink} to="/profile" onClick={handleMenuClose}>
                       <ListItemIcon>
                         <PersonIcon fontSize="small" sx={{ color: "white" }} />
                       </ListItemIcon>
                       My Profile
                     </MenuItem>
-                    <MenuItem component={NavLink} to="/purchase" onClick={handleClose}>
+
+                    <MenuItem component={NavLink} to="/purchase" onClick={handleMenuClose}>
                       <ListItemIcon>
                         <AccountBalance fontSize="small" sx={{ color: "white" }} />
                       </ListItemIcon>
                       Buy Coins
                     </MenuItem>
-                    <MenuItem component={NavLink} to="/dashboard" onClick={handleClose}>
+
+                    <MenuItem component={NavLink} to="/dashboard" onClick={handleMenuClose}>
                       <ListItemIcon>
                         <HistoryIcon fontSize="small" sx={{ color: "white" }} />
                       </ListItemIcon>
                       History
                     </MenuItem>
+
                     <MenuItem onClick={handleLogout}>
                       <ListItemIcon>
                         <Logout fontSize="small" sx={{ color: "red" }} />
@@ -194,7 +207,9 @@ export default function Header() {
           </div>
         </nav>
       </header>
-      <Sidebar />
+
+      {/* Sidebar */}
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
     </>
   );
 }

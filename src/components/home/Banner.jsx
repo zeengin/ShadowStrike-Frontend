@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-
+import Typed from "typed.js";
+import { useEffect, useRef } from "react";
 
 import topBottom from "../../assets/icon/top-bottom.png";
 
@@ -46,17 +47,17 @@ const featuredGames = [
     {
       name: "Masked Special Forces",
       link: "https://www.onlinegames.io/games/2022/unity2/masked-special-forces/index.html",
-      img: driftKing, // replace with actual image
+      img: driftKing,
     },
     {
       name: "Stack Fire Ball",
       link: "https://www.onlinegames.io/games/2021/unity/stack-fire-ball/index.html",
-      img: novaClicker, // replace with actual image
+      img: novaClicker,
     },
     {
       name: "GTA Simulator",
       link: "https://www.onlinegames.io/games/2023/unity2/gta-simulator/index.html",
-      img: fastFoodRush, // replace with actual image
+      img: fastFoodRush,
     },
   ],
   [
@@ -68,12 +69,12 @@ const featuredGames = [
     {
       name: "Real Flight Simulator",
       link: "https://www.onlinegames.io/games/2023/unity/real-flight-simulator/index.html",
-      img: driftKing, // replace with actual image
+      img: driftKing,
     },
     {
       name: "Stickman GTA City",
       link: "https://cloud.onlinegames.io/games/2024/unity3/stickman-gta-city/index-og.html",
-      img: cookieClickerPro, // replace with actual image
+      img: cookieClickerPro,
     },
     {
       name: "Cookie Clicker Pro",
@@ -84,6 +85,10 @@ const featuredGames = [
 ];
 
 function Banner() {
+  const { user } = useUser();
+  const typedRef = useRef(null);
+  const typedInstance = useRef(null);
+
   const sliderSettings = {
     dots: true,
     infinite: true,
@@ -95,8 +100,23 @@ function Banner() {
     arrows: false,
   };
 
-    const { user } = useUser();
+  useEffect(() => {
+    // Initialize Typed.js animation
+    typedInstance.current = new Typed(typedRef.current, {
+      strings: ["Entertainment", "Games", "Joy"],
+      typeSpeed: 100,
+      backSpeed: 50,
+      backDelay: 700,
+      loop: true,
+      showCursor: true,
+      cursorChar: "|",
+    });
 
+    return () => {
+      // Destroy on unmount to clean up memory
+      typedInstance.current?.destroy();
+    };
+  }, []);
 
   return (
     <section className="banner-section index-one overflow-hidden">
@@ -114,11 +134,14 @@ function Banner() {
                     <span className="display-one">
                       We Craft Games
                       <br />
-                      <span className="typed d-inline-block">Entertainment</span>
+                      <span
+                        ref={typedRef}
+                        className="d-inline-block text-highlight typing"
+                      ></span>
                     </span>
-                    <p className="fs-four">
-                      Developing games that are imaginative, fun and bringing
-                      colors to the gaming world
+                    <p className="fs-four mt-2">
+                      Developing games that are imaginative, fun, and bringing
+                      colors to the gaming world.
                     </p>
                   </div>
                   <div className="btn-area alt-bg">
@@ -146,35 +169,37 @@ function Banner() {
                         <div className="single-slider row p-3 p-sm-5">
                           {slide.map((game, gIdx) => (
                             <div key={gIdx} className="thumb-wrapper col-6">
-                             {user ? <a
-                                href={game.link}
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                <div className="thumb">
-                                  <img
-                                    src={game.img}
-                                    className="border p-2 shadow rounded-4"
-                                    alt={game.name}
-                                  />
-                                </div>
-                                <div className="app-download-title pt-1 text-center">
-                                  <h6>{game.name}</h6>
-                                </div>
-                              </a> :
-                              <>
-                              <div className="thumb">
-                                  <img
-                                    src={game.img}
-                                    className="border p-2 shadow rounded-4"
-                                    alt={game.name}
-                                  />
-                                </div>
-                                <div className="app-download-title pt-1 text-center">
-                                  <h6>{game.name}</h6>
-                                </div>
-                              </>
-                              }
+                              {user ? (
+                                <a
+                                  href={game.link}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                >
+                                  <div className="thumb">
+                                    <img
+                                      src={game.img}
+                                      className="border p-2 shadow rounded-4"
+                                      alt={game.name}
+                                    />
+                                  </div>
+                                  <div className="app-download-title pt-1 text-center">
+                                    <h6>{game.name}</h6>
+                                  </div>
+                                </a>
+                              ) : (
+                                <>
+                                  <div className="thumb">
+                                    <img
+                                      src={game.img}
+                                      className="border p-2 shadow rounded-4"
+                                      alt={game.name}
+                                    />
+                                  </div>
+                                  <div className="app-download-title pt-1 text-center">
+                                    <h6>{game.name}</h6>
+                                  </div>
+                                </>
+                              )}
                             </div>
                           ))}
                         </div>
