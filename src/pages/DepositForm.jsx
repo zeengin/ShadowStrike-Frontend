@@ -32,6 +32,7 @@ const DepositForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if(!form?.coins){
+      toast.dismiss();
       toast.error("Please insert coins.");
       return;
     }

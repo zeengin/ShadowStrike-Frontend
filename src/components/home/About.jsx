@@ -97,7 +97,7 @@ function About() {
             <div className="row">
               <div className="col-sm-6">
                 <div className="counter-item mb-8 pb-4">
-                  <div className="counters mb-3 d-flex align-items-center">
+                  <div className="counters mb-md-3 d-flex align-items-center">
                     <span
                       className="fs-three heading"
                       data-counter-final="500"
@@ -117,7 +117,7 @@ function About() {
              {/* Counter 2 */}
               <div className="col-sm-6">
                 <div className="counter-item mb-8 pb-4">
-                  <div className="counters mb-3 d-flex align-items-center">
+                  <div className="counters mb-md-3 d-flex align-items-center">
                     <span
                       className="odometer fs-three heading"
                       data-counter-final="2"
@@ -136,7 +136,7 @@ function About() {
               {/* Counter 3 */}
               <div className="col-sm-6">
                 <div className="counter-item mb-8 pb-4">
-                  <div className="counters mb-3 d-flex align-items-center">
+                  <div className="counters mb-md-3 d-flex align-items-center">
                     <span
                       className="odometer fs-three heading"
                       data-counter-final="52"
@@ -154,7 +154,7 @@ function About() {
               {/* Counter 4 */}
               <div className="col-sm-6">
                 <div className="counter-item mb-8 pb-4">
-                  <div className="counters mb-3 d-flex align-items-center">
+                  <div className="counters mb-md-3 d-flex align-items-center">
                     <span
                       className="odometer fs-three heading"
                       data-counter-final="4"

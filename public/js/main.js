@@ -977,19 +977,6 @@ document.addEventListener("DOMContentLoaded", function () {
       ]
     });
 
-    // profession type js
-    if ($(".typed").length) {
-      $(".typed").typed({
-        strings: ["Entertain", "Games", "Joy"],
-        typeSpeed: 100,
-        backDelay: 50,
-        loop: true,
-        cursorChar: "|",
-        contentType: "html",
-        loopCount: false,
-      });
-    }
-
     /* Wow js */
     new WOW().init();
 

@@ -35,7 +35,7 @@ const Checkout = () => {
   const cvvRef = useRef();
   const expiryRef = useRef();
 
-  // 1️⃣ Get Braintree client token
+  //Get Braintree client token
   useEffect(() => {
     async function fetchToken() {
       try {
@@ -48,7 +48,7 @@ const Checkout = () => {
     fetchToken();
   }, []);
 
-  // 2️⃣ Initialize Hosted Fields
+  // Initialize Hosted Fields
   useEffect(() => {
     if (!clientToken) return;
 
@@ -111,7 +111,6 @@ const Checkout = () => {
     });
   };
 
-  // 3️⃣ Submit handler
   const handleSubmit = async (nonce) => {
     setLoading(true);
     try {
@@ -120,7 +119,7 @@ const Checkout = () => {
       const response = await axiosWithHeaders.post(apis.PROCESS_PAYMENT, {
         load_amount: amount?.toString(),
         brand_slug: location?.state?.slug ||  "SHDO2025",
-        acceptTerms: true,
+        acceptTerms: true,  
         acceptPricing: true,
         payment_method_nonce: nonce,
         address: `${formData.address}, ${formData.city}, ${formData.state}, ${formData.zip}`,
@@ -157,7 +156,7 @@ const Checkout = () => {
               <form onSubmit={(e)=>e.preventDefault()}>
                 <div className="row g-5">
                   {/* Left Section */}
-                  <div className="col-md-7">
+                  <div className="col-md-7 order-2 order-md-1">
                     <h4 className="fw-bold text-white mb-3">Billing Details</h4>
                     <p className="small text-secondary">
                       Billed-as{" "}
@@ -272,7 +271,7 @@ const Checkout = () => {
                   </div>
 
                   {/* Right Section */}
-                  <div className="col-md-5">
+                  <div className="col-md-5 order-1 order-md-2">
                     <h4 className="fw-bold text-white mb-3">Checkout</h4>
                     <div className="p-3 border rounded-3 bg-secondary bg-opacity-10 border-secondary">
                       <h6 className="mb-3 fw-semibold text-light">Order Summary</h6>

@@ -115,12 +115,12 @@ export default function History() {
     <>
       <div className="d-flex align-items-center justify-content-between flex-wrap gap-3">
         <h2 className="fw-bold text-white mb-0">Transaction History</h2>
-        <div className="d-flex align-items-center gap-3 flex-shrink-0">
+        <div className="d-flex align-items-center gap-3 ">
           {/* Normal Select Dropdown for Brands */}
           <select
             className="bg-dark text-white border border-white rounded-2 px-2 py-1"
             style={{
-              minWidth: "200px",
+              minWidth: "150px",
               outline: "none",
               backgroundColor: "#1e1e1e", // deep dark background
               color: "white",
