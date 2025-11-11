@@ -104,6 +104,12 @@ export default function Profile() {
                                                 {user?.kyc_status == "pending" ? " In Progress" : "Approved"}
                                             </button>
                                     }
+                                    
+                                </div>
+                                <div className="col-md-12 text-end">
+                                    {user?.kyc_status == "rejected" && user?.kyc_reason &&
+                                        <p className="text-danger mt-2">Reason: {user?.kyc_reason}</p>
+                                    }
                                 </div>
                             </div>
                         </div>
