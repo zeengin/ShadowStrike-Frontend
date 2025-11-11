@@ -16,5 +16,5 @@ export const apis = {
     GET_PURCHASE_OPTIONS: `${baseurl}/api/purchase-options`,    
     GENERATE_PAYMENT_TOKEN: `${baseurl}/web/payment/generateClientToken`,    
     PROCESS_PAYMENT: `${baseurl}/web/payment/processPayment`,    
-
+    SUBMIT_KYC:`${baseurl}/web/local-kyc/create`,
 } 
