@@ -86,25 +86,28 @@ export default function Profile() {
                         <div className="card-body p-4">
                             <div className="row">
                                 <div className="col-md-6">
-                                    <h5 className="fw-bold mb-0 d-flex align-items-center"><MdSecurity />KYC Verification</h5>
+                                    <h5 className="fw-bold mb-0 d-flex align-items-center"><MdSecurity className="me-1" />KYC Verification</h5>
                                     <p className="text-light fs-6 mb-1">Please complete your KYC for account verification.</p>
                                 </div>
                                 <div className="col-md-6 text-end align-middle">
-                                   {user?.kyc_status == null ?
-                                    <button className="box-style btn-box text-dark" onClick={()=>navigate("/kyc-verification")} >
-                                    Start KYC
-                                    </button>
-                                    :
-                                    <button disabled className="box-style btn-box text-dark" onClick={()=>navigate("/kyc-verification")} >
-                                       {user?.kyc_status == "pending" ?" In Progress" : user?.kyc_status == "rejected" ? "Try Again" : "Approved"}
-                                    </button>
+                                    {user?.kyc_status == null ?
+                                        <button className="box-style btn-box text-dark" onClick={() => navigate("/kyc-verification")} >
+                                            Start KYC
+                                        </button>
+                                        :
+                                        user?.kyc_status == "rejected" ?
+                                            <button disabled  className="box-style btn-box text-dark" onClick={() => navigate("/kyc-verification")} >
+                                                Rejected
+                                            </button>
+                                            :
+                                            <button disabled className="box-style btn-box text-dark" >
+                                                {user?.kyc_status == "pending" ? " In Progress" : "Approved"}
+                                            </button>
                                     }
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
