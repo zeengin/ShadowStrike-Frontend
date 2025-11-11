@@ -2,20 +2,12 @@ import React, { useEffect } from "react";
 import { FaEdit } from "react-icons/fa";
 import { useUser } from "../context/UserContext";
 import { Avatar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { MdSecurity } from "react-icons/md";
 
 export default function Profile() {
-    //   const user = {
-    //     avatar: "https://i.pravatar.cc/150?img=32",
-    //     firstName: "Musharof",
-    //     lastName: "Chowdhury",
-    //     email: "randomuser@pimjo.com",
-    //     phone: "+09 363 398 46",
-    //     bio: "Team Manager",
-    //     location: "Arizona, United States",
-    //     role: "Team Manager",
-    //   };
     const { user, token, loading, fetchUser } = useUser();
-
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!user) {
@@ -35,7 +27,7 @@ export default function Profile() {
                             {/* Left side: Avatar + Info */}
                             <div className="d-flex align-items-center gap-3">
                                 <Avatar
-                                    sx={{ bgcolor: "#1976d2", cursor: "default", margin:"10px" }}
+                                    sx={{ bgcolor: "#1976d2", cursor: "default", margin: "10px" }}
                                 >
                                     {user?.first_name?.[0] || "U"}
                                 </Avatar>
@@ -59,7 +51,7 @@ export default function Profile() {
                     </div>
 
                     {/* Personal Info */}
-                    <div className="card bg-dark text-light shadow-sm rounded-4">
+                    <div className="card bg-dark text-light mb-4 shadow-sm rounded-4">
                         <div className="card-body p-4">
                             <div className="d-flex justify-content-between align-items-center mb-3">
                                 <h5 className="fw-bold mb-0">Personal Information</h5>
@@ -90,6 +82,38 @@ export default function Profile() {
                         </div>
                     </div>
 
+                    <div className="card bg-dark text-light shadow-sm rounded-4">
+                        <div className="card-body p-4">
+                            <div className="row">
+                                <div className="col-md-6">
+                                    <h5 className="fw-bold mb-0 d-flex align-items-center"><MdSecurity className="me-1" />KYC Verification</h5>
+                                    <p className="text-light fs-6 mb-1">Please complete your KYC for account verification.</p>
+                                </div>
+                                <div className="col-md-6 text-end align-middle">
+                                    {user?.kyc_status == null ?
+                                        <button className="box-style btn-box text-dark" onClick={() => navigate("/kyc-verification")} >
+                                            Start KYC
+                                        </button>
+                                        :
+                                        user?.kyc_status == "rejected" ?
+                                            <button disabled  className="box-style btn-box text-dark" onClick={() => navigate("/kyc-verification")} >
+                                                Rejected
+                                            </button>
+                                            :
+                                            <button disabled className="box-style btn-box text-dark" >
+                                                {user?.kyc_status == "pending" ? " In Progress" : "Approved"}
+                                            </button>
+                                    }
+                                    
+                                </div>
+                                <div className="col-md-12 text-end">
+                                    {user?.kyc_status == "rejected" && user?.kyc_reason &&
+                                        <p className="text-danger mt-2">Reason: {user?.kyc_reason}</p>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

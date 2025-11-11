@@ -23,36 +23,60 @@ import Receipt from './pages/Receipt';
 import PlayerDashboard from './pages/PlayerDashboard';
 import DepositForm from './pages/DepositForm';
 import WithdrawalForm from './pages/WithdrawalForm';
+import { useUser } from './context/UserContext';
+import Layout from './components/brand/Layout';
+import BrandDashboard from './pages/BrandDashboard';
+import BrandDeposits from './pages/BrandDeposits';
+import KycVerification from './pages/KycVerification';
+import BrandWithdrawals from './pages/BrandWithdrawals';
 
 
 
 function App() {
+  const { user } = useUser();
+
   return (
-     <Router>
+    <Router>
       <ScrollToTop />
-      <Header />
-      <main>
+      {(user?.role_id == 3 || !user) &&
+        <>
+          <Header />
+          <main>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/dashboard" element={<PlayerDashboard />} />
+              <Route path="/:slug/deposits" element={<DepositForm />} />
+              <Route path="/:slug/withdrawals" element={<WithdrawalForm />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/kyc-verification" element={<KycVerification />} />
+              <Route path="/about-us" element={<AboutUs />} />
+              <Route path="/entertainment" element={<Entertainment />} />
+              <Route path="/technology" element={<Technology />} />
+              <Route path="/services" element={<OurServices />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="/purchase" element={<Purchase />} />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/receipt/:transactionId" element={<Receipt />} />
+              <Route path="/terms&conditions" element={<Terms />} />
+            </Routes>
+          </main>
+          <Footer />
+        </>}
+
+      {/* BRAND ROUTES */}
+      {user?.role_id === 2 && (
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<PlayerDashboard />} />
-          <Route path="/:slug/deposits" element={<DepositForm />} />
-          <Route path="/:slug/withdrawals" element={<WithdrawalForm />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/about-us" element={<AboutUs />} />
-          <Route path="/entertainment" element={<Entertainment />} />
-          <Route path="/technology" element={<Technology />} />
-          <Route path="/services" element={<OurServices />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/purchase" element={<Purchase />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/receipt/:transactionId" element={<Receipt />} />
-          <Route path="/terms&conditions" element={<Terms />} />
+          <Route element={<Layout />}>
+            <Route path="/" element={<BrandDashboard />} />
+            <Route path="/brand/deposit" element={<BrandDeposits />} />
+             <Route path="/brand/withdrawal" element={<BrandWithdrawals />} />
+            {/*<Route path="/brand/settings" element={<BrandSettings />} /> */}
+          </Route>
         </Routes>
-      </main>
-      
-      <Footer />
+      )}
     </Router>
   )
 }

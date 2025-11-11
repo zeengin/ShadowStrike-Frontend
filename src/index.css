@@ -5908,3 +5908,19 @@ li {
         width: 100%;
     }
 }
+
+
+.bg-main{
+    background-color: #101828 !important;
+}
+
+.border-main{
+    border-color: #1d2939 !important;
+}
+.bg-brand{
+    background-color: #cfa122 !important;
+}
+
+.nav-active span{
+    color: black !important;
+}
