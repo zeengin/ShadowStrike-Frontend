@@ -20,9 +20,9 @@ import {
     MdSecurity,
 } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axiosWithHeaders from "../helper/axiosWithHeaders";
-import { apis } from "../apis";
+import { apis, baseurl } from "../apis";
 import toast, { Toaster } from "react-hot-toast";
 
 const KycVerification = () => {
@@ -53,6 +53,7 @@ const KycVerification = () => {
     const [open, setOpen] = useState(false);
     const [activeCapture, setActiveCapture] = useState(null);
     const [capturedImage, setCapturedImage] = useState(null);
+    const location = useLocation();
 
     const videoRef = useRef(null);
     const canvasRef = useRef(null);
@@ -67,6 +68,27 @@ const KycVerification = () => {
             email: user?.email || "",
         }));
     }, [user]);
+
+    const fetchKycDetails = async () => {
+        try {
+            const res = await axiosWithHeaders.get(apis.GET_KYC);
+            console.log("KYC details fetched:", res.data);
+            setFormData((prev) => ({
+                ...prev,
+                ...res?.data?.data,
+                selfie:res?.data?.data?.User?.selfie || null,
+                dob:res?.data?.data?.User?.dob || null,
+            }));
+        } catch (error) {
+            console.error("Error fetching KYC details:", error);
+        }
+    };
+
+    useEffect(() => {
+        if (location.state?.reapply) {
+            fetchKycDetails();
+        }
+    }, [location.state.reapply]);
 
     //  Step Navigation with Validation
     const handleNext = () => {
@@ -200,7 +222,7 @@ const KycVerification = () => {
 
             if (res.status === 201) {
                 setStep(4);
-            }else{
+            } else {
                 toast.error("Failed to submit KYC. Something went wrong.");
             }
         } catch (error) {
@@ -248,7 +270,7 @@ const KycVerification = () => {
                                 {formData.selfie ? (
                                     <>
                                         <img
-                                            src={URL.createObjectURL(formData.selfie)}
+                                            src={typeof formData.selfie == "string" && formData.selfie?.includes("uploads") ? `${baseurl}${formData.selfie}` :URL.createObjectURL(formData.selfie)}
                                             alt="Selfie"
                                             className="rounded-circle border border-secondary"
                                             style={{
@@ -332,7 +354,7 @@ const KycVerification = () => {
                                         {formData[field] ? (
                                             <>
                                                 <img
-                                                    src={URL.createObjectURL(formData[field])}
+                                                    src={ (typeof formData[field] == "string" && formData[field]?.includes("uploads")) ? `${baseurl}${formData[field]}` :URL.createObjectURL(formData[field])}
                                                     alt={field}
                                                     className="img-fluid rounded border border-secondary"
                                                 />
@@ -486,7 +508,7 @@ const KycVerification = () => {
                     {step < 3 ? (
                         <button
                             type="button"
-                            className="btn btn-light text-dark ms-auto d-flex align-items-center gap-2"
+                            className="box-style btn-box text-dark ms-auto d-flex align-items-center gap-2"
                             onClick={handleNext}
                         >
                             Next <FaArrowRight />
@@ -495,7 +517,7 @@ const KycVerification = () => {
                         <button
                             disabled={loading}
                             onClick={handleSubmit}
-                            className="btn btn-success ms-auto d-flex align-items-center gap-2"
+                            className="box-style btn-box text-dark ms-auto d-flex align-items-center gap-2"
                         >
                             {loading ? (
                                 <CircularProgress size={20} color="inherit" />
