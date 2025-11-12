@@ -10,9 +10,7 @@ export default function Profile() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!user) {
             fetchUser();
-        }
     }, [])
 
     return (
