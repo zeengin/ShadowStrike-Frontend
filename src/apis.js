@@ -17,4 +17,5 @@ export const apis = {
     GENERATE_PAYMENT_TOKEN: `${baseurl}/web/payment/generateClientToken`,    
     PROCESS_PAYMENT: `${baseurl}/web/payment/processPayment`,    
     SUBMIT_KYC:`${baseurl}/web/local-kyc/create`,
+    GET_KYC:`${baseurl}/web/local-kyc/details`,
 } 

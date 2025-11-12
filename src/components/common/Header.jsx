@@ -83,7 +83,7 @@ export default function Header() {
           >
             <img
               src={logo}
-              className="logo-text d-xxl-block rounded d-none"
+              className="logo-text d-xl-block rounded d-none"
               width="200"
               alt="logo-text"
             />

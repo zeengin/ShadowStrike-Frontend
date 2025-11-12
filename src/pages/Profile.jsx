@@ -10,9 +10,7 @@ export default function Profile() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!user) {
             fetchUser();
-        }
     }, [])
 
     return (
@@ -96,8 +94,10 @@ export default function Profile() {
                                         </button>
                                         :
                                         user?.kyc_status == "rejected" ?
-                                            <button disabled  className="box-style btn-box text-dark" onClick={() => navigate("/kyc-verification")} >
-                                                Rejected
+                                            <button  className="box-style btn-box text-dark" onClick={() => navigate("/kyc-verification",{
+                                                state: { reapply: true }
+                                            })} >
+                                                Re apply
                                             </button>
                                             :
                                             <button disabled className="box-style btn-box text-dark" >
