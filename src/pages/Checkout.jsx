@@ -6,9 +6,10 @@ import cardsIcons from "../assets/icon/cards.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import axiosWithHeaders from "../helper/axiosWithHeaders";
 import { apis } from "../apis";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import braintree from "braintree-web";
 import { PayPalScriptProvider, BraintreePayPalButtons } from "@paypal/react-paypal-js";
+import { useUser } from "../context/UserContext";
 
 
 const Checkout = () => {
@@ -18,6 +19,7 @@ const Checkout = () => {
   const [amount, setAmount] = useState(location?.state?.dollars || 0);
   const [clientToken, setClientToken] = useState(null);
   const [braintreeInstance, setBraintreeInstance] = useState(null);
+  const { user } = useUser();
 
   const [formData, setFormData] = useState({
     firstname: "",
@@ -93,7 +95,6 @@ const Checkout = () => {
         setBraintreeInstance(hostedFieldsInstance);
       } catch (err) {
         console.error(err);
-        toast.error("Failed to initialize payment fields.");
       }
     }
 
@@ -128,15 +129,26 @@ const Checkout = () => {
         lastname: formData.lastname,
         email: formData.email,
       });
-
       if (response?.status === 200 || response?.status === 201) {
         toast.success(`Purchase successful! You bought ${amount} coins.`);
         setTimeout(() => navigate("/dashboard"), 1500);
       } else {
-        toast.error(response?.data?.message || "Payment failed");
+        toast.error(response?.data?.error || "Payment failed");
       }
     } catch (err) {
-      toast.error("Payment failed. Please try again.");
+      if(err?.response?.data?.error?.includes("deposit limit")){
+        if(user?.kyc_status == "rejected"){
+          toast.error("Your KYC was rejected. Please reapply.");
+          setTimeout(() => navigate("/kyc-verification", { state: { reapply: true } }), 800);
+        }else if(user?.kyc_status == null){
+          toast.error("KYC verification is required to increase your deposit limit. Please complete your KYC.");
+          setTimeout(() => navigate("/kyc-verification"), 800);
+        }else if(user?.kyc_status == "pending"){
+          toast.error("Your KYC is still pending. Please wait for approval.");
+        }else{
+          toast.error(err?.response?.data?.error || "Payment failed. Please try again later.");
+        }
+      }
       console.error(err);
     } finally {
       setLoading(false);
@@ -292,6 +304,33 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+       <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            zIndex:1000000000000000,
+            background: "#1e1e1e",   // dark background
+            color: "#fff",           // white text
+            borderRadius: "8px",
+            padding: "12px 16px",
+            marginTop:"50px"
+          },
+          success: {
+            style: { background: "#1f3d2b", color: "#b6f2c8" }, // greenish
+            iconTheme: {
+              primary: "#22c55e",
+              secondary: "#fff",
+            },
+          },
+          error: {
+            style: { background: "#3d1f1f", color: "#f2b6b6" }, // reddish
+            iconTheme: {
+              primary: "#ef4444",
+              secondary: "#fff",
+            },
+          },
+        }}
+      />
     </div>
   );
 };

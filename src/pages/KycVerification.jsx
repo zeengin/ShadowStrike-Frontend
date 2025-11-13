@@ -88,7 +88,7 @@ const KycVerification = () => {
         if (location.state?.reapply) {
             fetchKycDetails();
         }
-    }, [location.state.reapply]);
+    }, [location?.state?.reapply]);
 
     //  Step Navigation with Validation
     const handleNext = () => {
