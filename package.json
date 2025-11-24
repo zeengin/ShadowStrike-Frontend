@@ -33,6 +33,7 @@
     "react-slick": "^0.31.0",
     "react-to-print": "^3.1.1",
     "slick-carousel": "^1.8.1",
+    "socket.io-client": "^4.8.1",
     "typed.js": "^2.1.0"
   },
   "devDependencies": {

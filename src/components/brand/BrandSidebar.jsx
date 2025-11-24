@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FaDollarSign, FaArrowRightArrowLeft } from "react-icons/fa6";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaBars, FaCube } from "react-icons/fa";
+import { LuTicketSlash } from "react-icons/lu";
 import logo from "../../assets/logo-text.png";
 import favicon from "/favicon.ico";
 
@@ -14,6 +15,7 @@ const AppSidebar = ({ isOpen, toggleSidebar }) => {
     { name: "Dashboard", icon: <FaCube />, path: "/" },
     { name: "Deposits", icon: <FaDollarSign />, path: "/brand/deposit" },
     { name: "Withdrawals", icon: <FaArrowRightArrowLeft />, path: "/brand/withdrawal" },
+    { name: "Support tickets", icon: <LuTicketSlash />, path: "/brand/tickets" },
   ];
 
   const isActive = (path) => location.pathname === path;
