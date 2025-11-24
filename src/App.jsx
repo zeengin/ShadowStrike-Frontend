@@ -29,6 +29,8 @@ import BrandDashboard from './pages/BrandDashboard';
 import BrandDeposits from './pages/BrandDeposits';
 import KycVerification from './pages/KycVerification';
 import BrandWithdrawals from './pages/BrandWithdrawals';
+import Tickets from './pages/Tickets';
+import ViewTicket from './pages/ViewTicket';
 
 
 
@@ -73,7 +75,8 @@ function App() {
             <Route path="/" element={<BrandDashboard />} />
             <Route path="/brand/deposit" element={<BrandDeposits />} />
              <Route path="/brand/withdrawal" element={<BrandWithdrawals />} />
-            {/*<Route path="/brand/settings" element={<BrandSettings />} /> */}
+            <Route path="/brand/tickets" element={<Tickets />} />
+            <Route path="/brand/tickets/:ticketId" element={<ViewTicket />} />
           </Route>
         </Routes>
       )}

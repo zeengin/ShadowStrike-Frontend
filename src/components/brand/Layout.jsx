@@ -16,7 +16,7 @@ const Layout = () => {
         <main
           className="p-4 bg-main text-white min-vh-100"
           style={{
-            marginLeft: sidebarOpen ? "240px" : "0",
+            marginLeft: sidebarOpen ? "240px" : "100px",
             transition: "margin-left 0.3s ease",
           }}
         >
